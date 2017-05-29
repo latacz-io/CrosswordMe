@@ -2,8 +2,9 @@ from random import randint
 
 #input
 
-words = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+words = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"]
 user_input = ""
+print(len(words))
 
 """while 1 == 1:
     user_input = input("Word: ")
@@ -31,6 +32,9 @@ for word in range(0, len(words)): #loops through every word in the words list
 
         puzzle[line][array_position] = words[word][word_position] #Writes the word at random position of the array
         word_position += 1 #Fake loop for the word position
+
+    if word == 9: #Escapse before creating (and getting stuck on) the last new line
+        break
 
     line = randint(0,9) #Choosees new line
     while line in lines_used: #keeps creating a new line as long as the line has been used alreard

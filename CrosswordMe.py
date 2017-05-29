@@ -21,7 +21,7 @@ puzzle = [["$" for x in range(10)] for y in range(10)] #Creates 10x10 array fill
 
 for word in range(0, len(words)): #loops through every word in the words list
 
-    lines_used.append(line) #appends used lines to used lines list
+
 
     word_position = 0 #resets the word_position. this is needed beacuse word_position counts through the length of every word being written
 
@@ -33,11 +33,9 @@ for word in range(0, len(words)): #loops through every word in the words list
         puzzle[line][array_position] = words[word][word_position] #Writes the word at random position of the array
         word_position += 1 #Fake loop for the word position
 
-    if word == 9: #Escapse before creating (and getting stuck on) the last new line
-        break
-
+    lines_used.append(line) #appends used lines to used lines list
     line = randint(0,9) #Choosees new line
-    while line in lines_used: #keeps creating a new line as long as the line has been used alreard
+    while line in lines_used and word != 9: #keeps creating a new line as long as the line has been used alreardy and its not the last word
         line = randint(0,9)
 
 

@@ -1,8 +1,9 @@
 from random import randint
+from random import sample
 
 #input
 
-words = ["one", "two", "three", "four"]#, "five", "six", "seven", "eight", "nine", "ten"]
+words = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"]
 user_input = ""
 print(len(words))
 """while 1 == 1:
@@ -16,12 +17,10 @@ column_count = 10
 
 # creating the puzzle
 ## horizontals
-line = randint(0, line_count-1) #First line to write in
-lines_used = [] #Empty array which contains lines which have been written in already (can probably be removed when its possible to write multiple words in one line)
-
+line_order = sample(range(line_count), line_count)
 puzzle = [["$" for x in range(column_count)] for y in range(line_count)] #Creates 10x10 array filled with "$"
 
-for word in range(0, len(words)): #loops through every word in the words list
+for word, line in zip(range(len(words)), line_order): #loops through every word in the words list
 
 
 
@@ -34,12 +33,6 @@ for word in range(0, len(words)): #loops through every word in the words list
 
         puzzle[line][array_position] = words[word][word_position] #Writes the word at random position of the array
         word_position += 1 #Fake loop for the word position
-
-    lines_used.append(line) #appends used lines to used lines list
-    line = randint(0, line_count-1) #Choosees new line
-    while line in lines_used and word != line_count-1: #keeps creating a new line as long as the line has been used alreardy and its not the last word
-        line = randint(0, line_count-1)
-
 
 #Prints the puzzle
 for line in range(line_count):

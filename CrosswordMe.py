@@ -1,7 +1,7 @@
 from random import randint
 from random import sample
 
-def print_puzzle(puzzle, line_count, column_count):
+def print_puzzle():
     #Prints the puzzle puzzle on a board
     for line in range(line_count):
         for position in range(column_count):
@@ -10,7 +10,8 @@ def print_puzzle(puzzle, line_count, column_count):
 
 def word_input():
     #Collects the words for the puzzle
-    words = ["one"] * 100
+    global words
+    words = ["YEAHAA"] * 5
     #, "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"]
     user_input = ""
     """while 1 == 1:
@@ -20,33 +21,69 @@ def word_input():
         words.append(user_input)"""
     return words
 
-def calculate_field_size(words):
-    line_count = len(words)
-    column_count = 10
+def calculate_field_size():
+    global line_count
+    line_count = 12
+    global column_count
+    column_count = 12
     return line_count, column_count
 
-def create_puzzle(words, line_count, column_count):
+def write_horizontal(word):
+    if word >= 0:
+        start_position = randint(0, column_count-len(words[word])) #int for start_position
+        end_position = start_position+len(words[word]) #int for end_position
+        line = randint(0, line_count-1)
+        word_position = 0 #resets the word_position. this is needed beacuse word_position counts through the length of every word being written
+        for array_position in range(start_position, end_position): #Loops through position within the array
+
+            puzzle[line][array_position] = words[word][word_position] #Writes the word at random position of the array
+            word_position += 1 #Fake loop for the word position
+
+def write_vertical(word):
+    if word >= 0:
+        start_position = randint(0, line_count-len(words[word])) #int for start_position
+        end_position = start_position+len(words[word]) #int for end_position
+        column = randint(0, column_count-1)
+        word_position = 0 #resets the word_position. this is needed beacuse word_position counts through the length of every word being written
+        for array_position in range(start_position, end_position): #Loops through position within the array
+
+            puzzle[array_position][column] = words[word][word_position] #Writes the word at random position of the array
+            word_position += 1 #Fake loop for the word position
+
+def write_diagonal(word):
+    if word >= 0:
+        start_x_position = randint(0, column_count-len(words[word])) #int for start_position
+        start_y_position = randint(0, line_count-len(words[word])) #int for start_position
+        end_x_position = start_x_position+len(words[word]) #int for end_position
+        end_y_position = start_y_position+len(words[word]) #int for end_position
+        word_position = 0 #resets the word_position. this is needed beacuse word_position counts through the length of every word being written
+        for x_position, y_position in zip(range(start_x_position, end_x_position), range(start_y_position, end_y_position)): #Loops through position within the array
+
+            puzzle[y_position][x_position] = words[word][word_position] #Writes the word at random position of the array
+            word_position += 1 #Fake loop for the word position
+
+def create_puzzle():
     # creating the puzzle
-    ## horizontals
-    line_order = sample(range(line_count), line_count)
-    puzzle = [["$" for x in range(column_count)] for y in range(line_count)] #Creates 10x10 array filled with "$"
+    global puzzle
+    puzzle = [["$" for x in range(column_count)] for y in range(line_count)] #Creates array filled with "$"
 
     for word in range(len(words)): #loops through every word in the words list
-        word_position = 0 #resets the word_position. this is needed beacuse word_position counts through the length of every word being written
-        line = line_order[0] #TEMP
-        if word == 0:
-            start_position = randint(0, 10-len(words[word])) #int for start_position
-            end_position = start_position+len(words[word]) #int for end_position
 
-            for array_position in range(start_position, end_position): #Loops through position within the array
 
-                puzzle[line][array_position] = words[word][word_position] #Writes the word at random position of the array
-                word_position += 1 #Fake loop for the word position
 
-        else:
-            for array_position in range(column_count-len(words[word])+1):
-                if puzzle[line][array_position:array_position+len(words[word])-1] == words[word]: #Bisher drin: Wenn das Wort komplett gleich ist. Es fehlt: Wenn das wort zum Teil gleich ist. Mit "in" lösen?
-                     puzzle[line][array_position:array_position+len(words[word])-1] = words[word]
+
+        word_direction = randint(0,2)
+        if word_direction == 0:
+            write_horizontal(word)
+        elif word_direction == 1:
+            write_vertical(word)
+        elif word_direction == 2:
+            write_diagonal(word)
+
+
+
+
+
 
 
 
@@ -55,6 +92,6 @@ def create_puzzle(words, line_count, column_count):
     return puzzle
 
 words = word_input()
-line_count, column_count = calculate_field_size(words)
-puzzle = create_puzzle(words, line_count, column_count)
-print_puzzle(puzzle, line_count, column_count)
+line_count, column_count = calculate_field_size()
+puzzle = create_puzzle()
+print_puzzle()

@@ -27,15 +27,23 @@ def define_field_size():
     global column_count
     column_count = 12
 
-def calculate_postions(word_length, start_x_position, start_y_position, end_x_position, end_y_position)
+def calculate_postions(word_length):
+
+    start_x_position = randint(0, column_count-word_length) #int for start_position
+    start_y_position = randint(0, line_count-word_length) #int for start_position
+    end_x_position = start_x_position+word_length #int for end_position
+    end_y_position = start_y_position+word_length #int for end_position
+
+    return start_x_position, start_y_position, end_x_position, end_y_position
 
 def write_horizontal(words, word, puzzle):
     if word == 0:
-        start_position = randint(0, column_count-len(words[word])) #int for start_position
-        end_position = start_position+len(words[word]) #int for end_position
+
+        start_x_position, start_y_position, end_x_position, end_y_position = calculate_postions(len(words[word]))
         line = randint(0, line_count-1)
+
         word_position = 0 #resets the word_position. this is needed beacuse word_position counts through the length of every word being written
-        for array_position in range(start_position, end_position): #Loops through position within the array
+        for array_position in range(start_x_position, end_x_position): #Loops through position within the array
 
             puzzle[line][array_position] = words[word][word_position] #Writes the word at random position of the array
             word_position += 1 #Fake loop for the word position
@@ -43,11 +51,12 @@ def write_horizontal(words, word, puzzle):
 
 def write_vertical(words, word, puzzle):
     if word == 0:
-        start_position = randint(0, line_count-len(words[word])) #int for start_position
-        end_position = start_position+len(words[word]) #int for end_position
+
+        start_x_position, start_y_position, end_x_position, end_y_position = calculate_postions(len(words[word]))
         column = randint(0, column_count-1)
+
         word_position = 0 #resets the word_position. this is needed beacuse word_position counts through the length of every word being written
-        for array_position in range(start_position, end_position): #Loops through position within the array
+        for array_position in range(start_y_position, end_y_position): #Loops through position within the array
 
             puzzle[array_position][column] = words[word][word_position] #Writes the word at random position of the array
             word_position += 1 #Fake loop for the word position
@@ -56,10 +65,9 @@ def write_vertical(words, word, puzzle):
 
 def write_diagonal(words, word, puzzle):
     if word == 0:
-        start_x_position = randint(0, column_count-len(words[word])) #int for start_position
-        start_y_position = randint(0, line_count-len(words[word])) #int for start_position
-        end_x_position = start_x_position+len(words[word]) #int for end_position
-        end_y_position = start_y_position+len(words[word]) #int for end_position
+
+        start_x_position, start_y_position, end_x_position, end_y_position = calculate_postions(len(words[word]))
+
         word_position = 0 #resets the word_position. this is needed beacuse word_position counts through the length of every word being written
         for x_position, y_position in zip(range(start_x_position, end_x_position), range(start_y_position, end_y_position)): #Loops through position within the array
 

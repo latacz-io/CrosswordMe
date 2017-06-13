@@ -10,14 +10,10 @@ def print_puzzle(puzzle):
 
 def word_input():
     #Collects the words for the puzzle
+
     words = ["YEAHAA"] * 5
-    #, "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"]
     user_input = ""
-    """while 1 == 1:
-        user_input = input("Word: ")
-        if user_input.lower() == "done":
-            break
-        words.append(user_input)"""
+
     return words
 
 def define_field_size():

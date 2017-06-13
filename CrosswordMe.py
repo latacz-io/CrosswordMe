@@ -29,15 +29,15 @@ def define_field_size():
 
 def calculate_postions(word_length):
 
-    start_x_position = randint(0, column_count-word_length) #int for start_position
-    start_y_position = randint(0, line_count-word_length) #int for start_position
-    end_x_position = start_x_position+word_length #int for end_position
-    end_y_position = start_y_position+word_length #int for end_position
+    start_x_position = randint(0, column_count-word_length)
+    start_y_position = randint(0, line_count-word_length)
+    end_x_position = start_x_position+word_length
+    end_y_position = start_y_position+word_length
 
     return start_x_position, start_y_position, end_x_position, end_y_position
 
-def write_horizontal(words, word, puzzle):
-    if word == 0:
+def write_horizontal(words, word_index, puzzle):
+    if word_index == 0:
 
         start_x_position, start_y_position, end_x_position, end_y_position = calculate_postions(len(words[word]))
         line = randint(0, line_count-1)
@@ -45,7 +45,7 @@ def write_horizontal(words, word, puzzle):
         word_position = 0 #resets the word_position. this is needed beacuse word_position counts through the length of every word being written
         for array_position in range(start_x_position, end_x_position): #Loops through position within the array
 
-            puzzle[line][array_position] = words[word][word_position] #Writes the word at random position of the array
+            puzzle[line][array_position] = words[word_index][word_position] #Writes the word at random position of the array
             word_position += 1 #Fake loop for the word position
     return puzzle
 

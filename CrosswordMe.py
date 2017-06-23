@@ -11,7 +11,7 @@ def print_puzzle(puzzle):
 def word_input():
     #Collects the words for the puzzle
 
-    words = ["one", "two", "three", "looooong"]
+    words = ["ngong", "looooong"]
     user_input = ""
     words.sort(key=len, reverse=True)
 
@@ -44,6 +44,27 @@ def write_horizontal(words, word_index, puzzle):
 
             puzzle[line][array_position] = words[word_index][word_position] #Writes the word at random position of the array
             word_position += 1 #Fake loop for the word position
+
+    else: #every word which isnt the first
+        fit = []
+
+        for line in range(line_count): #Finds calcultes als fits and saves them in fit
+            for array_position in range(column_count-len(words[word_index])+1):
+
+                if puzzle[line][array_position] == words[word_index][0]:
+                    fit.append(1)
+                    for letter in range(1, len(words[word_index])):
+                        if puzzle[line][array_position+letter] == words[word_index][letter]:
+                            fit[len(fit)-1] +=1
+
+                        elif puzzle[line][array_position+letter] != words[word_index][letter] and puzzle[line][array_position+letter] != "$":
+                            del fit[-1]
+                            break
+
+                    """ # test printsprint("Word: ", words[word_index], "; Line: ", line, "; First array_position: ", array_position)#, "; Fit: " ,fit[len(fit)-1])
+                if len(fit) > 0:
+                    print("; Fit: " ,fit[len(fit)-1])"""
+
     return puzzle
 
 def write_vertical(words, word_index, puzzle):
@@ -79,7 +100,7 @@ def create_puzzle(words):
 
     for word_index in range(len(words)): #loops through every word in the words list
 
-        word_direction = randint(0,2)
+        word_direction = randint(0,0)
         if word_direction == 0:
             puzzle = write_horizontal(words, word_index, puzzle)
         elif word_direction == 1:

@@ -41,14 +41,14 @@ def calculate_fits(puzzle, current_word):
                 horizontal_fit = 0
                 if puzzle_x_position - position_puzzle_letter_in_word >= 0 and puzzle_x_position + (len(current_word)-1-position_puzzle_letter_in_word) < column_count: #Makes shure the horizontal Puzzle index doenst get out of range to the left and to the right
                     for word_postion in range(len(current_word)):
-                        if puzzle[puzzle_y_position][puzzle_x_position - position_puzzle_letter_in_word + word_postion] == current_word[word_postion]:
+                        if puzzle[puzzle_y_position][puzzle_x_position - position_puzzle_letter_in_word + word_postion] == current_word[word_postion]: #increases horizontal fit, if the letter of word and puzzle match
                             horizontal_fit += 1
 
-                        elif puzzle[puzzle_y_position][puzzle_x_position - position_puzzle_letter_in_word + word_postion] != current_word[word_postion] and puzzle[puzzle_y_position][puzzle_x_position - position_puzzle_letter_in_word + word_postion] != "$":
+                        elif puzzle[puzzle_y_position][puzzle_x_position - position_puzzle_letter_in_word + word_postion] != current_word[word_postion] and puzzle[puzzle_y_position][puzzle_x_position - position_puzzle_letter_in_word + word_postion] != "$": #if the ltter doesn match and the puzzle postion isnt empty ("$"), then the fit socre is being resetted and the loop checking for horizontal is broken (which makes sense, since it the word doesnt fit horizontally for this x,y combination)
                             horizontal_fit = -1
                             break
 
-                    if horizontal_fit > fit:
+                    if horizontal_fit >= fit: #defines position and direction if its the best fit so far. With > it takes the first fit, with >= it takes the last. A non fit has to be "-1" if this is >=. Otherwise the last position of a non fit will be written into the variables. This doesnt matter as long as a fit = 0 is overwritten in the end. But stil, temporary there would be wrong informations in the variables
                         #print(horizontal_fit)
                         fit = horizontal_fit
                         start_x_position = puzzle_x_position - position_puzzle_letter_in_word

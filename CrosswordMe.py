@@ -25,9 +25,19 @@ def define_field_size():
     column_count = 12
 
 
-def calculate_fits(word, word_index, puzzle):
+def calculate_fits(puzzle, current_word):
 
     fit = 0
+
+    for puzzle_y_position in range(line_count): #loops through every position in the lines
+        for puzzle_x_position in range(column_count): #loops through every position in the columns
+            position_puzzle_letter_in_word = current_word.find(puzzle[puzzle_y_position][puzzle_x_position]) # Checks if the letter in the puzzle is within the current word
+            if position_puzzle_letter_in_word >= 0: #The letter in the puzzle is the same as on of the current_word
+                
+
+    return start_x_position, start_y_position, word_direction
+
+    """ oooooold
 
     for line in range(line_count): #Calculates horizontal fits
         for array_position in range(column_count-len(words[word_index])+1): # loops through every position in the line
@@ -45,7 +55,7 @@ def calculate_fits(word, word_index, puzzle):
                 if temp_fit >= fit:
                     start_x_position = array_position
                     start_y_position = line
-                    word_direction = 0
+                    word_direction = 0"""
 
 def write_puzzle(puzzle, current_word, start_x_position, start_y_position, word_direction):
 
@@ -89,6 +99,8 @@ def create_puzzle(words):
             start_x_position = randint(0, column_count-len(words[word_index])) #Random x position within the boundries
             start_y_position = randint(0, line_count-len(words[word_index])) #Random y position within the boundries
 
+        else: #For every word after the first one
+            start_x_position, start_y_position, word_direction = calculate_fits(puzzle, words[word_index])
 
         puzzle = write_puzzle(puzzle, words[word_index], start_x_position, start_y_position, word_direction)
 

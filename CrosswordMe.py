@@ -35,7 +35,7 @@ def calculate_fits(puzzle, current_word):
             position_puzzle_letter_in_word = current_word.find(puzzle[puzzle_y_position][puzzle_x_position]) # Checks if the letter in the puzzle is within the current word
             #print("Puzzle Letter: " + puzzle[puzzle_y_position][puzzle_x_position] + ";Word Letter: " + current_word[position_puzzle_letter_in_word] + "; Score: " + str(position_puzzle_letter_in_word))
 
-            if position_puzzle_letter_in_word >= 0: #The letter in the puzzle is the same as on of the current_word
+            if position_puzzle_letter_in_word >= 0: #The letter in the puzzle is the same as one of the current_word
 
                 # horizontal
                 horizontal_fit = 0
@@ -48,7 +48,7 @@ def calculate_fits(puzzle, current_word):
                             horizontal_fit = -1
                             break
 
-                    if horizontal_fit >= fit:
+                    if horizontal_fit > fit:
                         #print(horizontal_fit)
                         fit = horizontal_fit
                         start_x_position = puzzle_x_position - position_puzzle_letter_in_word

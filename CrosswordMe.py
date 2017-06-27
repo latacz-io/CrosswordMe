@@ -109,13 +109,19 @@ def create_puzzle(words):
 
     for word_index in range(len(words)): #loops through every word in the words list
 
-        word_direction = randint(0,0)
-        if word_direction == 0:
-            puzzle = write_horizontal(words, word_index, puzzle)
-        elif word_direction == 1:
-            puzzle = write_vertical(words, word_index, puzzle)
-        elif word_direction == 2:
-            puzzle = write_diagonal(words, word_index, puzzle)
+        if word_index == 0: #Special case for the first word which is written in a random position in a random direction on the board
+            word_direction = randint(0,2) #Random direction
+            start_x_position = randint(0, column_count-word_length) #Random x position within the boundries
+            start_y_position = randint(0, line_count-word_length) #Random y position within the boundries
+
+            if word_direction == 0:
+                puzzle = write_horizontal(words, word_index, puzzle)
+            elif word_direction == 1:
+                puzzle = write_vertical(words, word_index, puzzle)
+            elif word_direction == 2:
+                puzzle = write_diagonal(words, word_index, puzzle)
+
+
 
     return puzzle
 

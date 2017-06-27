@@ -68,22 +68,18 @@ def write_horizontal(words, word_index, puzzle, start_x_position, start_y_positi
 def write_vertical(words, word_index, puzzle, start_x_position, start_y_position):
 
     word_position = 0 #resets the word_position. this is needed beacuse word_position counts through the length of every word being written
-    for puzzle_y_position in range(start_y_position, start_y_position+len(words[word_index])): #Loops through position within the array
+    for puzzle_y_position in range(start_y_position, start_y_position+len(words[word_index])): #Loops through position within the puzzle
 
             puzzle[puzzle_y_position][start_x_position] = words[word_index][word_position] #Writes the word at random position of the array
             word_position += 1 #Fake loop for the word position
 
     return puzzle
 
-def write_diagonal(words, word_index, puzzle):
-    if word_index == 0:
-
-        start_x_position, start_y_position, end_x_position, end_y_position = calculate_postions(len(words[word_index]))
-
+def write_diagonal(words, word_index, puzzle, start_x_position, start_y_position):
         word_position = 0 #resets the word_position. this is needed beacuse word_position counts through the length of every word being written
-        for x_position, y_position in zip(range(start_x_position, end_x_position), range(start_y_position, end_y_position)): #Loops through position within the array
+        for puzzle_x_position, puzzle_y_position in zip(range(start_x_position, start_x_position+len(words[word_index])), range(start_y_position, start_y_position+len(words[word_index]))): #Loops through position within the array
 
-            puzzle[y_position][x_position] = words[word_index][word_position] #Writes the word at random position of the array
+            puzzle[puzzle_x_position][puzzle_y_position] = words[word_index][word_position] #Writes the word at random position of the array
             word_position += 1 #Fake loop for the word position
 
     return puzzle
@@ -104,7 +100,7 @@ def create_puzzle(words):
             elif word_direction == 1:
                 puzzle = write_vertical(words, word_index, puzzle, start_x_position, start_y_position)
             elif word_direction == 2:
-                puzzle = write_diagonal(words, word_index, puzzle)
+                puzzle = write_diagonal(words, word_index, puzzle, start_x_position, start_y_position)
 
 
 

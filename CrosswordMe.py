@@ -47,31 +47,31 @@ def calculate_fits(word, word_index, puzzle):
                     start_y_position = line
                     word_direction = 0
 
-def write_puzzle(words, word_index, puzzle, start_x_position, start_y_position, word_direction):
+def write_puzzle(puzzle, current_word, start_x_position, start_y_position, word_direction):
 
     word_position = 0 #resets the word_position. this is needed beacuse word_position counts through the length of every word being written
 
     if word_direction == 0:
     # writes horizontal
-        for puzzle_x_position in range(start_x_position, start_x_position+len(words[word_index])): #Loops through position within the puzzle
+        for puzzle_x_position in range(start_x_position, start_x_position+len(current_word)): #Loops through position within the puzzle
 
-            puzzle[start_y_position][puzzle_x_position] = words[word_index][word_position] #Writes the word at random position of the array
+            puzzle[start_y_position][puzzle_x_position] = current_word[word_position] #Writes the word at random position of the array
             word_position += 1 #Fake loop for the word position
 
 
     elif word_direction == 1:
     # writes vertical
-        for puzzle_y_position in range(start_y_position, start_y_position+len(words[word_index])): #Loops through position within the puzzle
+        for puzzle_y_position in range(start_y_position, start_y_position+len(current_word)): #Loops through position within the puzzle
 
-                puzzle[puzzle_y_position][start_x_position] = words[word_index][word_position] #Writes the word at random position of the array
+                puzzle[puzzle_y_position][start_x_position] = current_word[word_position] #Writes the word at random position of the array
                 word_position += 1 #Fake loop for the word position
 
 
     elif word_direction == 2:
     # writes diagonal
-        for puzzle_x_position, puzzle_y_position in zip(range(start_x_position, start_x_position+len(words[word_index])), range(start_y_position, start_y_position+len(words[word_index]))): #Loops through position within the array
+        for puzzle_x_position, puzzle_y_position in zip(range(start_x_position, start_x_position+len(current_word)), range(start_y_position, start_y_position+len(current_word))): #Loops through position within the array
 
-            puzzle[puzzle_x_position][puzzle_y_position] = words[word_index][word_position] #Writes the word at random position of the array
+            puzzle[puzzle_x_position][puzzle_y_position] = current_word[word_position] #Writes the word at random position of the array
             word_position += 1 #Fake loop for the word position
 
 
@@ -90,7 +90,7 @@ def create_puzzle(words):
             start_y_position = randint(0, line_count-len(words[word_index])) #Random y position within the boundries
 
 
-        puzzle = write_puzzle(words, word_index, puzzle, start_x_position, start_y_position, word_direction)
+        puzzle = write_puzzle(puzzle, words[word_index], start_x_position, start_y_position, word_direction)
 
 
 

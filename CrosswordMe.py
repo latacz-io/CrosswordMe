@@ -9,7 +9,7 @@ def print_puzzle(puzzle):
         print() #Prints Newline
 
 def word_input():
-    #Collects the words for the puzzle
+    #Collects the words for the puzzle and sorts them by lenght descending
 
     words = ["ngong", "looooong"]
     user_input = ""
@@ -104,7 +104,7 @@ def write_diagonal(words, word_index, puzzle):
     return puzzle
 
 def create_puzzle(words):
-    # creating the puzzle
+    # creates an array with "$" symbols to be the field and loops through the words being written
     puzzle = [["$" for x in range(column_count)] for y in range(line_count)] #Creates array filled with "$"
 
     for word_index in range(len(words)): #loops through every word in the words list

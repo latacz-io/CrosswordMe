@@ -86,8 +86,8 @@ def create_puzzle(words):
 
         if word_index == 0: #Special case for the first word which is written in a random position in a random direction on the board
             word_direction = randint(0,2) #Random direction
-            start_x_position = randint(0, column_count-word_length) #Random x position within the boundries
-            start_y_position = randint(0, line_count-word_length) #Random y position within the boundries
+            start_x_position = randint(0, column_count-len(words[word_index])) #Random x position within the boundries
+            start_y_position = randint(0, line_count-len(words[word_index])) #Random y position within the boundries
 
 
         puzzle = write_puzzle(words, word_index, puzzle, start_x_position, start_y_position, word_direction)

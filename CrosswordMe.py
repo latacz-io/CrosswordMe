@@ -24,14 +24,6 @@ def define_field_size():
     global column_count
     column_count = 12
 
-def calculate_postions(word_length):
-
-    start_x_position = randint(0, column_count-word_length)
-    start_y_position = randint(0, line_count-word_length)
-    end_x_position = start_x_position+word_length
-    end_y_position = start_y_position+word_length
-
-    return start_x_position, start_y_position, end_x_position, end_y_position
 
 def calculate_fits(word, word_index, puzzle):
 

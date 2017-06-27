@@ -11,7 +11,7 @@ def print_puzzle(puzzle):
 def word_input():
     #Collects the words for the puzzle and sorts them by lenght descending
 
-    words = ["one", "looooong"]
+    words = ["abc", "looooong"]
     user_input = ""
     words.sort(key=len, reverse=True)
 
@@ -55,8 +55,8 @@ def calculate_fits(puzzle, current_word):
                         start_y_position = puzzle_y_position
                         word_direction = 0
 
-            #else: #Temp writing at 0,0,horizontal to simulate what happens if there is no fit at all
-                #start_x_position, start_y_position, word_direction = 0, 0, 0
+    if fit == 0: #Temp writing at 0,0,horizontal to simulate what happens if there is no fit at all
+        start_x_position, start_y_position, word_direction = 0, 0, 0
 
     return start_x_position, start_y_position, word_direction
 

@@ -11,7 +11,7 @@ def print_puzzle(puzzle):
 def word_input():
     #Collects the words for the puzzle and sorts them by lenght descending
 
-    words = ["ngong", "looooong"]
+    words = ["one", "looooong"]
     user_input = ""
     words.sort(key=len, reverse=True)
 
@@ -31,9 +31,32 @@ def calculate_fits(puzzle, current_word):
 
     for puzzle_y_position in range(line_count): #loops through every position in the lines
         for puzzle_x_position in range(column_count): #loops through every position in the columns
+
             position_puzzle_letter_in_word = current_word.find(puzzle[puzzle_y_position][puzzle_x_position]) # Checks if the letter in the puzzle is within the current word
+            #print("Puzzle Letter: " + puzzle[puzzle_y_position][puzzle_x_position] + ";Word Letter: " + current_word[position_puzzle_letter_in_word] + "; Score: " + str(position_puzzle_letter_in_word))
+
             if position_puzzle_letter_in_word >= 0: #The letter in the puzzle is the same as on of the current_word
-                
+
+                # horizontal
+                horizontal_fit = 0
+                if puzzle_x_position - position_puzzle_letter_in_word >= 0 and puzzle_x_position + (len(current_word)-1-position_puzzle_letter_in_word) < column_count: #Makes shure the horizontal Puzzle index doenst get out of range to the left and to the right
+                    for word_postion in range(len(current_word)):
+                        if puzzle[puzzle_y_position][puzzle_x_position - position_puzzle_letter_in_word + word_postion] == current_word[word_postion]:
+                            horizontal_fit += 1
+
+                        elif puzzle[puzzle_y_position][puzzle_x_position - position_puzzle_letter_in_word + word_postion] == current_word[word_postion] and puzzle[puzzle_y_position][puzzle_x_position - position_puzzle_letter_in_word + word_postion] != "$":
+                            horizontal_fit = -1
+                            break
+
+                    if horizontal_fit >= fit:
+                        #print(horizontal_fit)
+                        fit = horizontal_fit
+                        start_x_position = puzzle_x_position - position_puzzle_letter_in_word
+                        start_y_position = puzzle_y_position
+                        word_direction = 0
+
+            #else: #Temp writing at 0,0,horizontal to simulate what happens if there is no fit at all
+                #start_x_position, start_y_position, word_direction = 0, 0, 0
 
     return start_x_position, start_y_position, word_direction
 
@@ -95,7 +118,7 @@ def create_puzzle(words):
     for word_index in range(len(words)): #loops through every word in the words list
 
         if word_index == 0: #Special case for the first word which is written in a random position in a random direction on the board
-            word_direction = randint(0,2) #Random direction
+            word_direction = randint(1,1) #Random direction
             start_x_position = randint(0, column_count-len(words[word_index])) #Random x position within the boundries
             start_y_position = randint(0, line_count-len(words[word_index])) #Random y position within the boundries
 

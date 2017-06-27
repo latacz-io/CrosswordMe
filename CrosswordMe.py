@@ -33,6 +33,28 @@ def calculate_postions(word_length):
 
     return start_x_position, start_y_position, end_x_position, end_y_position
 
+def calculate_fits(word, word_index, puzzle):
+
+    fit = 0
+
+    for line in range(line_count): #Calculates horizontal fits
+        for array_position in range(column_count-len(words[word_index])+1): # loops through every position in the line
+
+            if puzzle[line][array_position] == words[word_index][0]: #Checks if the postion is the same as the first letter in the word
+                temp_fit = 1
+                for letter in range(1, len(words[word_index])): #loops through letters of the word
+                    if puzzle[line][array_position+letter] == words[word_index][letter]: #checks if the letter is the same as the letter on the board
+                        temp_fit +=1
+
+                    elif puzzle[line][array_position+letter] != words[word_index][letter] and puzzle[line][array_position+letter] != "$": #breaks and deletes temp_fit score, when a letter is different and the field is not empty (represented by "$")
+                        temp_fit = -1
+                        break
+
+                if temp_fit >= fit:
+                    start_x_position = array_position
+                    start_y_position = line
+                    word_direction = 0
+
 def write_horizontal(words, word_index, puzzle):
     if word_index == 0:
 
@@ -46,22 +68,9 @@ def write_horizontal(words, word_index, puzzle):
             word_position += 1 #Fake loop for the word position
 
     else: #every word which isnt the first
-        fit = []
 
-        for line in range(line_count): #Finds calcultes als fits and saves them in fit
-            for array_position in range(column_count-len(words[word_index])+1):
 
-                if puzzle[line][array_position] == words[word_index][0]:
-                    fit.append(1)
-                    for letter in range(1, len(words[word_index])):
-                        if puzzle[line][array_position+letter] == words[word_index][letter]:
-                            fit[len(fit)-1] +=1
-
-                        elif puzzle[line][array_position+letter] != words[word_index][letter] and puzzle[line][array_position+letter] != "$":
-                            del fit[-1]
-                            break
-
-                    """ # test printsprint("Word: ", words[word_index], "; Line: ", line, "; First array_position: ", array_position)#, "; Fit: " ,fit[len(fit)-1])
+                    """ # test prints print("Word: ", words[word_index], "; Line: ", line, "; First array_position: ", array_position)#, "; Fit: " ,fit[len(fit)-1])
                 if len(fit) > 0:
                     print("; Fit: " ,fit[len(fit)-1])"""
 

@@ -11,7 +11,7 @@ def print_puzzle(puzzle):
 def word_input():
     #Collects the words for the puzzle and sorts them by lenght descending
 
-    words = ["one", "looooong"]
+    words = ["one", "looooong", "hello", "chris", "glux"]
     user_input = ""
     words.sort(key=len, reverse=True)
 
@@ -38,13 +38,13 @@ def calculate_fits(puzzle, current_word):
             horizontal_fit = 0
             if puzzle_x_position + len(current_word) <= column_count: #Makes shure the horizontal Puzzle index doenst get out of range  to the right
 
-                for word_postion in range(len(current_word)):
+                for word_position in range(len(current_word)):
 
-                    if puzzle[puzzle_y_position][puzzle_x_position + word_postion] == current_word[word_postion]: #increases horizontal fit, if the letter of word and puzzle match
+                    if puzzle[puzzle_y_position][puzzle_x_position + word_position] == current_word[word_position]: #increases horizontal fit, if the letter of word and puzzle match
 
                         horizontal_fit += 1
 
-                    elif puzzle[puzzle_y_position][puzzle_x_position + word_postion] != current_word[word_postion] and puzzle[puzzle_y_position][puzzle_x_position + word_postion] != "$": #if the ltter doesn match and the puzzle postion isnt empty ("$"), then the fit socre is being resetted and the loop checking for horizontal is broken (which makes sense, since it the word doesnt fit horizontally for this x,y combination)
+                    elif puzzle[puzzle_y_position][puzzle_x_position + word_position] != current_word[word_position] and puzzle[puzzle_y_position][puzzle_x_position + word_position] != "$": #if the ltter doesn match and the puzzle postion isnt empty ("$"), then the fit socre is being resetted and the loop checking for horizontal is broken (which makes sense, since it the word doesnt fit horizontally for this x,y combination)
 
                         horizontal_fit = -1
                         break
@@ -55,6 +55,29 @@ def calculate_fits(puzzle, current_word):
                     start_x_position = puzzle_x_position
                     start_y_position = puzzle_y_position
                     word_direction = 0
+
+            # vertical
+            vertical_fit = 0
+            if puzzle_y_position + len(current_word) <= line_count: #Makes shure the vertical Puzzle index doenst get out of range  to the right
+
+                for word_position in range(len(current_word)):
+
+                    if puzzle[puzzle_y_position + word_position][puzzle_x_position] == current_word[word_position]: #increases vertical fit, if the letter of word and puzzle match
+
+                        vertical_fit += 1
+
+                    elif puzzle[puzzle_y_position + word_position][puzzle_x_position] != current_word[word_position] and puzzle[puzzle_y_position + word_position][puzzle_x_position] != "$": #if the ltter doesn match and the puzzle postion isnt empty ("$"), then the fit socre is being resetted and the loop checking for vertical is broken (which makes sense, since it the word doesnt fit horizontally for this x,y combination)
+
+                        vertical_fit = -1
+                        break
+
+                if vertical_fit >= fit: #defines position and direction if its the best fit so far. With > it takes the first fit, with >= it takes the last. A non fit has to be "-1" if this is >=. Otherwise the last position of a non fit will be written into the variables. This doesnt matter as long as a fit = 0 is overwritten in the end. But stil, temporary there would be wrong informations in the variables
+                    #print(vertical_fit)
+                    fit = vertical_fit
+                    start_x_position = puzzle_x_position
+                    start_y_position = puzzle_y_position
+                    word_direction = 1
+
 
     if fit == 0: #Temp writing at 0,0,horizontal to simulate what happens if there is no fit at all
         start_x_position, start_y_position, word_direction = 0, 0, 0

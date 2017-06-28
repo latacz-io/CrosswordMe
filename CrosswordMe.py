@@ -32,28 +32,29 @@ def calculate_fits(puzzle, current_word):
     for puzzle_y_position in range(line_count): #loops through every position in the lines
         for puzzle_x_position in range(column_count): #loops through every position in the columns
 
-            position_puzzle_letter_in_word = current_word.find(puzzle[puzzle_y_position][puzzle_x_position]) # Checks if the letter in the puzzle is within the current word
-            #print("Puzzle Letter: " + puzzle[puzzle_y_position][puzzle_x_position] + ";Word Letter: " + current_word[position_puzzle_letter_in_word] + "; Score: " + str(position_puzzle_letter_in_word))
 
-            if position_puzzle_letter_in_word >= 0: #The letter in the puzzle is the same as one of the current_word
 
-                # horizontal
-                horizontal_fit = 0
-                if puzzle_x_position - position_puzzle_letter_in_word >= 0 and puzzle_x_position + (len(current_word)-1-position_puzzle_letter_in_word) < column_count: #Makes shure the horizontal Puzzle index doenst get out of range to the left and to the right
-                    for word_postion in range(len(current_word)):
-                        if puzzle[puzzle_y_position][puzzle_x_position - position_puzzle_letter_in_word + word_postion] == current_word[word_postion]: #increases horizontal fit, if the letter of word and puzzle match
-                            horizontal_fit += 1
+            # horizontal
+            horizontal_fit = 0
+            if puzzle_x_position + len(current_word) <= column_count: #Makes shure the horizontal Puzzle index doenst get out of range  to the right
 
-                        elif puzzle[puzzle_y_position][puzzle_x_position - position_puzzle_letter_in_word + word_postion] != current_word[word_postion] and puzzle[puzzle_y_position][puzzle_x_position - position_puzzle_letter_in_word + word_postion] != "$": #if the ltter doesn match and the puzzle postion isnt empty ("$"), then the fit socre is being resetted and the loop checking for horizontal is broken (which makes sense, since it the word doesnt fit horizontally for this x,y combination)
-                            horizontal_fit = -1
-                            break
+                for word_postion in range(len(current_word)):
 
-                    if horizontal_fit >= fit: #defines position and direction if its the best fit so far. With > it takes the first fit, with >= it takes the last. A non fit has to be "-1" if this is >=. Otherwise the last position of a non fit will be written into the variables. This doesnt matter as long as a fit = 0 is overwritten in the end. But stil, temporary there would be wrong informations in the variables
-                        #print(horizontal_fit)
-                        fit = horizontal_fit
-                        start_x_position = puzzle_x_position - position_puzzle_letter_in_word
-                        start_y_position = puzzle_y_position
-                        word_direction = 0
+                    if puzzle[puzzle_y_position][puzzle_x_position + word_postion] == current_word[word_postion]: #increases horizontal fit, if the letter of word and puzzle match
+
+                        horizontal_fit += 1
+
+                    elif puzzle[puzzle_y_position][puzzle_x_position + word_postion] != current_word[word_postion] and puzzle[puzzle_y_position][puzzle_x_position + word_postion] != "$": #if the ltter doesn match and the puzzle postion isnt empty ("$"), then the fit socre is being resetted and the loop checking for horizontal is broken (which makes sense, since it the word doesnt fit horizontally for this x,y combination)
+
+                        horizontal_fit = -1
+                        break
+
+                if horizontal_fit >= fit: #defines position and direction if its the best fit so far. With > it takes the first fit, with >= it takes the last. A non fit has to be "-1" if this is >=. Otherwise the last position of a non fit will be written into the variables. This doesnt matter as long as a fit = 0 is overwritten in the end. But stil, temporary there would be wrong informations in the variables
+                    #print(horizontal_fit)
+                    fit = horizontal_fit
+                    start_x_position = puzzle_x_position
+                    start_y_position = puzzle_y_position
+                    word_direction = 0
 
     if fit == 0: #Temp writing at 0,0,horizontal to simulate what happens if there is no fit at all
         start_x_position, start_y_position, word_direction = 0, 0, 0

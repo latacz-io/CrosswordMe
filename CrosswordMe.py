@@ -49,7 +49,7 @@ def calculate_fits(puzzle, current_word):
                         horizontal_fit = -1
                         break
 
-                if horizontal_fit >= fit: #defines position and direction if its the best fit so far. With > it takes the first fit, with >= it takes the last. A non fit has to be "-1" if this is >=. Otherwise the last position of a non fit will be written into the variables. This doesnt matter as long as a fit = 0 is overwritten in the end. But stil, temporary there would be wrong informations in the variables
+                if horizontal_fit > fit: #defines position and direction if its the best fit so far. With > it takes the first fit, with >= it takes the last. A non fit has to be "-1" if this is >=. Otherwise the last position of a non fit will be written into the variables. This doesnt matter as long as a fit = 0 is overwritten in the end. But stil, temporary there would be wrong informations in the variables
                     #print(horizontal_fit)
                     fit = horizontal_fit
                     start_x_position = puzzle_x_position
@@ -71,13 +71,34 @@ def calculate_fits(puzzle, current_word):
                         vertical_fit = -1
                         break
 
-                if vertical_fit >= fit: #defines position and direction if its the best fit so far. With > it takes the first fit, with >= it takes the last. A non fit has to be "-1" if this is >=. Otherwise the last position of a non fit will be written into the variables. This doesnt matter as long as a fit = 0 is overwritten in the end. But stil, temporary there would be wrong informations in the variables
+                if vertical_fit > fit: #defines position and direction if its the best fit so far. With > it takes the first fit, with >= it takes the last. A non fit has to be "-1" if this is >=. Otherwise the last position of a non fit will be written into the variables. This doesnt matter as long as a fit = 0 is overwritten in the end. But stil, temporary there would be wrong informations in the variables
                     #print(vertical_fit)
                     fit = vertical_fit
                     start_x_position = puzzle_x_position
                     start_y_position = puzzle_y_position
                     word_direction = 1
 
+            # diagonal
+            diagonal_fit = 0
+            if puzzle_x_position + len(current_word) <= column_count and puzzle_y_position + len(current_word) <= line_count: #Makes shure the diagonal Puzzle index doenst get out of range  to the right
+
+                for word_position in range(len(current_word)):
+
+                    if puzzle[puzzle_y_position + word_position][puzzle_x_position + word_position] == current_word[word_position]: #increases diagonal fit, if the letter of word and puzzle match
+
+                        diagonal_fit += 1
+
+                    elif puzzle[puzzle_y_position + word_position][puzzle_x_position + word_position] != current_word[word_position] and puzzle[puzzle_y_position + word_position][puzzle_x_position + word_position] != "$": #if the ltter doesn match and the puzzle postion isnt empty ("$"), then the fit socre is being resetted and the loop checking for diagonal is broken (which makes sense, since it the word doesnt fit horizontally for this x,y combination)
+
+                        diagonal_fit = -1
+                        break
+
+                if diagonal_fit > fit: #defines position and direction if its the best fit so far. With > it takes the first fit, with >= it takes the last. A non fit has to be "-1" if this is >=. Otherwise the last position of a non fit will be written into the variables. This doesnt matter as long as a fit = 0 is overwritten in the end. But stil, temporary there would be wrong informations in the variables
+                    #print(diagonal_fit, current_word)
+                    fit = diagonal_fit
+                    start_x_position = puzzle_x_position
+                    start_y_position = puzzle_y_position
+                    word_direction = 2
 
     if fit == 0: #Temp writing at 0,0,horizontal to simulate what happens if there is no fit at all
         start_x_position, start_y_position, word_direction = 0, 0, 0

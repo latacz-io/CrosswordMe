@@ -11,7 +11,7 @@ def print_puzzle(puzzle):
 def word_input():
     #Collects the words for the puzzle and sorts them by lenght descending
 
-    words = ["one", "looooong", "hello", "chris", "glux", "mymymy"]
+    words = ["one","xyxyxyxy", "looooong", "hello", "chris", "glu", "mymymy", "höhöhö"]
     user_input = ""
     words.sort(key=len, reverse=True)
 
@@ -20,9 +20,9 @@ def word_input():
 def define_field_size():
     #defines field size
     global line_count
-    line_count = 12
+    line_count = 8
     global column_count
-    column_count = 12
+    column_count = 8
 
 def set_direction_parameters(direction):
     #returns direction parameters
@@ -76,6 +76,8 @@ def calculate_fits(puzzle, current_word):
 
     if fit == 0: #Temp writing at 0,0,horizontal to simulate what happens if there is no fit at all
 
+        start_x_position = 0 #this is used for breaking out of the for loops
+
         for puzzle_y_position in sample(range(line_count), k = line_count): #loops through every position in the lines in random order
             for puzzle_x_position in sample(range(column_count), k = column_count): #loops through every position in the columns in random order
                 for fit_direction in sample(range(3), k = 3): #loops through every direction in random order
@@ -84,7 +86,10 @@ def calculate_fits(puzzle, current_word):
                     if (puzzle_x_position + len(current_word)) * x_activator <= column_count and (puzzle_y_position + len(current_word)) * y_activator <= line_count: #Makes shure the temp Puzzle index doenst get out of range  to the right
                         for word_position in range(len(current_word)):
                             if puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != current_word[word_position] and puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != "$": #if the ltter doesn match and the puzzle postion isnt empty ("$") this breaks the loop
-                                #the word doenst fit in this position
+                                #the word doesnt fit in this position, breaks out of word loop
+                                start_x_position = -1
+                                start_y_position = -1
+                                word_direction = -1
                                 break
 
                         else:
@@ -92,6 +97,11 @@ def calculate_fits(puzzle, current_word):
                             start_x_position = puzzle_x_position
                             start_y_position = puzzle_y_position
                             word_direction = fit_direction
+                            break #breaks out of for direction loop, if a fitting position has been found
+                if start_x_position > 0: #breaks out of for x loop, if a fitting position has been found
+                    break
+            if start_x_position > 0: #breaks out of for y loop, if a fitting position has been found
+                break
 
 
     return start_x_position, start_y_position, word_direction
@@ -119,11 +129,16 @@ def create_puzzle(words):
             word_direction = randint(0,2) #Random direction
             start_x_position = randint(0, column_count-len(words[word_index])) #Random x position within the boundries
             start_y_position = randint(0, line_count-len(words[word_index])) #Random y position within the boundries
+            puzzle = write_puzzle(puzzle, words[word_index], start_x_position, start_y_position, word_direction)
+
 
         else: #For every word after the first one
             start_x_position, start_y_position, word_direction = calculate_fits(puzzle, words[word_index])
+            if start_x_position == -1: #means the word cant be fit
+                print("The word " + words[word_index] + " could not be fit in the puzzle")
 
-        puzzle = write_puzzle(puzzle, words[word_index], start_x_position, start_y_position, word_direction)
+            else:
+                puzzle = write_puzzle(puzzle, words[word_index], start_x_position, start_y_position, word_direction)
 
 
 

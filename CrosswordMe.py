@@ -24,6 +24,21 @@ def define_field_size():
     global column_count
     column_count = 12
 
+def set_direction_parameters(direction):
+    #returns direction parameters
+    if direction == 0: #horizontal
+        x_counter = 1
+        y_counter = 0
+
+    elif direction == 1: #vertical
+        x_counter = 0
+        y_counter = 1
+
+    elif direction == 2: #diagonal
+        x_counter = 1
+        y_counter = 1
+
+    return x_counter, y_counter
 
 def calculate_fits(puzzle, current_word):
 
@@ -33,17 +48,7 @@ def calculate_fits(puzzle, current_word):
         for puzzle_x_position in range(column_count): #loops through every position in the columns
             for fit_direction in range(3): #loops through every direction
 
-                if fit_direction == 0: #horizontal
-                    x_counter = 1
-                    y_counter = 0
-
-                elif fit_direction == 1: #vertical
-                    x_counter = 0
-                    y_counter = 1
-
-                elif fit_direction == 2: #diagonal
-                    x_counter = 1
-                    y_counter = 1
+                x_counter, y_counter = set_direction_parameters(fit_direction)
 
 
                 temp_fit = 0

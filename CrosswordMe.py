@@ -11,7 +11,7 @@ def print_puzzle(puzzle):
 def word_input():
     #Collects the words for the puzzle and sorts them by lenght descending
 
-    words = ["one", "looooong", "hello", "chris", "glux"]
+    words = ["one", "looooong", "hello", "chris", "glux", "mymymy"]
     user_input = ""
     words.sort(key=len, reverse=True)
 
@@ -60,7 +60,7 @@ def calculate_fits(puzzle, current_word):
 
                             temp_fit += 1
 
-                        elif puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != current_word[word_position] and puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != "$": #if the ltter doesn match and the puzzle postion isnt empty ("$"), then the fit socre is being resetted and the loop checking for temp is broken (which makes sense, since it the word doesnt fit horizontally for this x,y combination)
+                        elif puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != current_word[word_position] and puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != "$": #if the ltter doesn match and the puzzle postion isnt empty ("$") this breaks the loop
 
                             temp_fit = -1
                             break
@@ -75,7 +75,24 @@ def calculate_fits(puzzle, current_word):
 
 
     if fit == 0: #Temp writing at 0,0,horizontal to simulate what happens if there is no fit at all
-        start_x_position, start_y_position, word_direction = 0, 0, 0
+
+        for puzzle_y_position in sample(range(line_count), k = line_count): #loops through every position in the lines in random order
+            for puzzle_x_position in sample(range(column_count), k = column_count): #loops through every position in the columns in random order
+                for fit_direction in sample(range(3), k = 3): #loops through every direction in random order
+
+                    x_activator, y_activator = set_direction_parameters(fit_direction)
+                    if (puzzle_x_position + len(current_word)) * x_activator <= column_count and (puzzle_y_position + len(current_word)) * y_activator <= line_count: #Makes shure the temp Puzzle index doenst get out of range  to the right
+                        for word_position in range(len(current_word)):
+                            if puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != current_word[word_position] and puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != "$": #if the ltter doesn match and the puzzle postion isnt empty ("$") this breaks the loop
+                                #the word doenst fit in this position
+                                break
+
+                        else:
+                            #for is exceted without a break --> the word fits in this position
+                            start_x_position = puzzle_x_position
+                            start_y_position = puzzle_y_position
+                            word_direction = fit_direction
+
 
     return start_x_position, start_y_position, word_direction
 

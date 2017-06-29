@@ -82,30 +82,11 @@ def calculate_fits(puzzle, current_word):
 
 def write_puzzle(puzzle, current_word, start_x_position, start_y_position, word_direction):
 
-    word_position = 0 #resets the word_position. this is needed beacuse word_position counts through the length of every word being written
+    x_activator, y_activator = set_direction_parameters(word_direction)
 
-    if word_direction == 0:
-    # writes horizontal
-        for puzzle_x_position in range(start_x_position, start_x_position+len(current_word)): #Loops through position within the puzzle
+    for word_position in range(len(current_word)): #Loops through position within the array
 
-            puzzle[start_y_position][puzzle_x_position] = current_word[word_position] #Writes the word at random position of the array
-            word_position += 1 #Fake loop for the word position
-
-
-    elif word_direction == 1:
-    # writes vertical
-        for puzzle_y_position in range(start_y_position, start_y_position+len(current_word)): #Loops through position within the puzzle
-
-                puzzle[puzzle_y_position][start_x_position] = current_word[word_position] #Writes the word at random position of the array
-                word_position += 1 #Fake loop for the word position
-
-
-    elif word_direction == 2:
-    # writes diagonal
-        for puzzle_x_position, puzzle_y_position in zip(range(start_x_position, start_x_position+len(current_word)), range(start_y_position, start_y_position+len(current_word))): #Loops through position within the array
-
-            puzzle[puzzle_x_position][puzzle_y_position] = current_word[word_position] #Writes the word at random position of the array
-            word_position += 1 #Fake loop for the word position
+        puzzle[start_y_position + (word_position * y_activator)][start_x_position + (word_position * x_activator)] = current_word[word_position]
 
 
     return puzzle

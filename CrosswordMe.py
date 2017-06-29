@@ -27,18 +27,18 @@ def define_field_size():
 def set_direction_parameters(direction):
     #returns direction parameters
     if direction == 0: #horizontal
-        x_counter = 1
-        y_counter = 0
+        x_activator = 1
+        y_activator = 0
 
     elif direction == 1: #vertical
-        x_counter = 0
-        y_counter = 1
+        x_activator = 0
+        y_activator = 1
 
     elif direction == 2: #diagonal
-        x_counter = 1
-        y_counter = 1
+        x_activator = 1
+        y_activator = 1
 
-    return x_counter, y_counter
+    return x_activator, y_activator
 
 def calculate_fits(puzzle, current_word):
 
@@ -48,19 +48,19 @@ def calculate_fits(puzzle, current_word):
         for puzzle_x_position in range(column_count): #loops through every position in the columns
             for fit_direction in range(3): #loops through every direction
 
-                x_counter, y_counter = set_direction_parameters(fit_direction)
+                x_activator, y_activator = set_direction_parameters(fit_direction)
 
 
                 temp_fit = 0
-                if (puzzle_x_position + len(current_word)) * x_counter <= column_count and (puzzle_y_position + len(current_word)) * y_counter <= line_count: #Makes shure the temp Puzzle index doenst get out of range  to the right
+                if (puzzle_x_position + len(current_word)) * x_activator <= column_count and (puzzle_y_position + len(current_word)) * y_activator <= line_count: #Makes shure the temp Puzzle index doenst get out of range  to the right
 
                     for word_position in range(len(current_word)):
 
-                        if puzzle[puzzle_y_position + (word_position * y_counter)][puzzle_x_position + (word_position * x_counter)] == current_word[word_position]: #increases temp fit, if the letter of word and puzzle match
+                        if puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] == current_word[word_position]: #increases temp fit, if the letter of word and puzzle match
 
                             temp_fit += 1
 
-                        elif puzzle[puzzle_y_position + (word_position * y_counter)][puzzle_x_position + (word_position * x_counter)] != current_word[word_position] and puzzle[puzzle_y_position + (word_position * y_counter)][puzzle_x_position + (word_position * x_counter)] != "$": #if the ltter doesn match and the puzzle postion isnt empty ("$"), then the fit socre is being resetted and the loop checking for temp is broken (which makes sense, since it the word doesnt fit horizontally for this x,y combination)
+                        elif puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != current_word[word_position] and puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != "$": #if the ltter doesn match and the puzzle postion isnt empty ("$"), then the fit socre is being resetted and the loop checking for temp is broken (which makes sense, since it the word doesnt fit horizontally for this x,y combination)
 
                             temp_fit = -1
                             break

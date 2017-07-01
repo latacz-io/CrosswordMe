@@ -11,7 +11,7 @@ def print_puzzle(puzzle):
 def word_input():
     #Collects the words for the puzzle and sorts them by lenght descending
 
-    words = ["one","xyxyxyxy", "looooong", "hello", "chris", "glu", "mymymy", "höhöhö"]
+    words = ["one","xyxyxyxy", "looooong", "hello", "chris", "glu", "mymymy", "höhöhö", "xxxxxxxx", "yyyyyyyy", "zzzzzzzz", "aaaaaaaa", "bbbbbbbb"]
     user_input = ""
     words.sort(key=len, reverse=True)
 

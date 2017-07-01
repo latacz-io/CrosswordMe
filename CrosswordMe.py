@@ -7,7 +7,7 @@ def print_puzzle(puzzle):
     #Prints the puzzle puzzle on a board
     for line in range(line_count):
         for position in range(column_count):
-            print(str(puzzle[line][position]) + " ", end="") #Prints character in current position
+            print(str(puzzle[line][position]).upper() + " ", end="") #Prints character in current position
         print() #Prints Newline
 
 def fill_field_with_randoms(puzzle):

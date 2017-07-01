@@ -20,9 +20,9 @@ def word_input():
 def define_field_size():
     #defines field size
     global line_count
-    line_count = 8
+    line_count = 12
     global column_count
-    column_count = 8
+    column_count = 12
 
 def set_direction_parameters(direction):
     #returns direction parameters
@@ -44,9 +44,9 @@ def calculate_fits(puzzle, current_word):
 
     fit = 0
 
-    for puzzle_y_position in range(line_count): #loops through every position in the lines
-        for puzzle_x_position in range(column_count): #loops through every position in the columns
-            for fit_direction in range(3): #loops through every direction
+    for puzzle_y_position in sample(range(line_count), k = line_count): #loops through every position in the lines in random order
+        for puzzle_x_position in sample(range(column_count), k = column_count): #loops through every position in the columns in random order
+            for fit_direction in sample(range(3), k = 3):
 
                 x_activator, y_activator = set_direction_parameters(fit_direction)
 

@@ -13,8 +13,6 @@ def print_puzzle(puzzle):
 def fill_field_with_randoms(puzzle):
     #Fills the rest of the free space (represented by "$") with random letters
 
-    alphabet = ["a", "b", "c"]
-
     for puzzle_y_position in range(line_count):
         for puzzle_x_position in range(column_count):
 
@@ -28,7 +26,7 @@ def fill_field_with_randoms(puzzle):
 def word_input():
     #Collects the words for the puzzle and sorts them by lenght descending
 
-    words = ["one","xyxyxyxy", "looooong", "hello", "chris", "glu", "mymymy", "höhöhö", "xxxxxxxx", "yyyyyyyy", "zzzzzzzz", "aaaaaaaa", "bbbbbbbb"]
+    words = ["Test", "Noch", "Nocheiner"]
     user_input = ""
     words.sort(key=len, reverse=True)
 

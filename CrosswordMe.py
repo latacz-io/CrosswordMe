@@ -85,7 +85,7 @@ def calculate_fits(puzzle, current_word):
                             temp_fit = -1
 
 
-                    if temp_fit > fit: #defines position and direction if its the best fit so far. With > it takes the first fit, with >= it takes the last. A non fit has to be "-1" if this is >=. Otherwise the last position of a non fit will be written into the variables. This doesnt matter as long as a fit = 0 is overwritten in the end. But stil, temporary there would be wrong informations in the variables
+                    elif temp_fit > fit: #defines position and direction if its the best fit so far. With > it takes the first fit, with >= it takes the last. A non fit has to be "-1" if this is >=. Otherwise the last position of a non fit will be written into the variables. This doesnt matter as long as a fit = 0 is overwritten in the end. But stil, temporary there would be wrong informations in the variables
                         #print(temp_fit, current_word)
                         fit = temp_fit
                         start_x_position = puzzle_x_position
@@ -94,7 +94,7 @@ def calculate_fits(puzzle, current_word):
 
 
 
-    if fit == 0: #Temp writing at 0,0,horizontal to simulate what happens if there is no fit at all
+    if fit == 0: #If there is no fit
 
         start_x_position = 0 #this is used for breaking out of the for loops
 
@@ -168,5 +168,5 @@ def create_puzzle(words):
 words = word_input()
 define_field_size()
 puzzle = create_puzzle(words)
-#puzzle = fill_field_with_randoms(puzzle)
+puzzle = fill_field_with_randoms(puzzle)
 print_puzzle(puzzle)

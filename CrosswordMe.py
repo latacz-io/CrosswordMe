@@ -80,6 +80,11 @@ def calculate_fits(puzzle, current_word):
                             temp_fit = -1
                             break
 
+                    if temp_fit == len(current_word): #In case a word fits perfectly into another. Also in case a word fits perfectly into a combination of other (which is unlikely tho)
+
+                            temp_fit = -1
+
+
                     if temp_fit > fit: #defines position and direction if its the best fit so far. With > it takes the first fit, with >= it takes the last. A non fit has to be "-1" if this is >=. Otherwise the last position of a non fit will be written into the variables. This doesnt matter as long as a fit = 0 is overwritten in the end. But stil, temporary there would be wrong informations in the variables
                         #print(temp_fit, current_word)
                         fit = temp_fit
@@ -163,5 +168,5 @@ def create_puzzle(words):
 words = word_input()
 define_field_size()
 puzzle = create_puzzle(words)
-puzzle = fill_field_with_randoms(puzzle)
+#puzzle = fill_field_with_randoms(puzzle)
 print_puzzle(puzzle)

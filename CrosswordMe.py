@@ -1,7 +1,7 @@
 from random import randint
 from random import sample
 from random import choice
-from string import ascii_lowercase
+from string import ascii_letters
 
 def print_puzzle(puzzle):
     #Prints the puzzle puzzle on a board
@@ -17,7 +17,7 @@ def fill_field_with_randoms(puzzle):
         for puzzle_x_position in range(column_count):
 
             if puzzle[puzzle_y_position][puzzle_x_position] == "$":
-                puzzle[puzzle_y_position][puzzle_x_position] = choice(ascii_lowercase)
+                puzzle[puzzle_y_position][puzzle_x_position] = choice(ascii_letters)
 
 
 
@@ -26,8 +26,11 @@ def fill_field_with_randoms(puzzle):
 def word_input():
     #Collects the words for the puzzle and sorts them by lenght descending
 
-    words = ["Test", "Noch", "Nocheiner"]
-    user_input = ""
+    words = ["Test", "Noch", "Nocheiner", "loooooooooooooooooooooong"]
+    for word in words:
+        if len(word) > line_count:
+            print(word + " has " + str(len(word)) + " letters. A maximum length of " + str(line_count) + " Letters is possible. " + word + " has been ommitted" )
+            words.remove(word)
     words.sort(key=len, reverse=True)
 
     return words
@@ -165,8 +168,8 @@ def create_puzzle(words):
 
     return puzzle
 
-words = word_input()
 define_field_size()
+words = word_input()
 puzzle = create_puzzle(words)
 puzzle = fill_field_with_randoms(puzzle)
 print_puzzle(puzzle)

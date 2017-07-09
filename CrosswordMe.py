@@ -16,7 +16,7 @@ def fill_field_with_randoms(puzzle):
     for puzzle_y_position in range(line_count):
         for puzzle_x_position in range(column_count):
 
-            if puzzle[puzzle_y_position][puzzle_x_position] == "$":
+            if puzzle[puzzle_y_position][puzzle_x_position] == " ":
                 puzzle[puzzle_y_position][puzzle_x_position] = choice(ascii_letters)
 
 
@@ -78,7 +78,7 @@ def calculate_fits(puzzle, current_word):
 
                             temp_fit += 1
 
-                        elif puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != current_word[word_position] and puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != "$": #if the ltter doesn match and the puzzle postion isnt empty ("$") this breaks the loop
+                        elif puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != current_word[word_position] and puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != " ": #if the ltter doesn match and the puzzle postion isnt empty (" ") this breaks the loop
 
                             temp_fit = -1
                             break
@@ -108,7 +108,7 @@ def calculate_fits(puzzle, current_word):
                     x_activator, y_activator = set_direction_parameters(fit_direction)
                     if (puzzle_x_position + len(current_word)) * x_activator <= column_count and (puzzle_y_position + len(current_word)) * y_activator <= line_count: #Makes shure the temp Puzzle index doenst get out of range  to the right
                         for word_position in range(len(current_word)):
-                            if puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != current_word[word_position] and puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != "$": #if the ltter doesn match and the puzzle postion isnt empty ("$") this breaks the loop
+                            if puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != current_word[word_position] and puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != " ": #if the ltter doesn match and the puzzle postion isnt empty (" ") this breaks the loop
                                 #the word doesnt fit in this position, breaks out of word loop
                                 start_x_position = -1
                                 start_y_position = -1
@@ -143,8 +143,8 @@ def write_puzzle(puzzle, current_word, start_x_position, start_y_position, word_
 
 
 def create_puzzle(words):
-    # creates an array with "$" symbols to be the field and loops through the words being written
-    puzzle = [["$" for x in range(column_count)] for y in range(line_count)] #Creates array filled with "$"
+    # creates an array with " " symbols to be the field and loops through the words being written
+    puzzle = [[" " for x in range(column_count)] for y in range(line_count)] #Creates array filled with " "
 
     for word_index in range(len(words)): #loops through every word in the words list
 
@@ -171,5 +171,5 @@ def create_puzzle(words):
 define_field_size()
 words = word_input()
 puzzle = create_puzzle(words)
-puzzle = fill_field_with_randoms(puzzle)
+#puzzle = fill_field_with_randoms(puzzle)
 print_puzzle(puzzle)

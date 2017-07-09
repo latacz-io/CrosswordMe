@@ -1,3 +1,6 @@
+#Fill in the words in line 32 you want to be set
+#Comment out fill_field_with_randoms call in the end to see where your words are being set (will be at a different postion the next time, since a new puzzle will be generated)
+
 from random import sample
 from random import choice
 from string import ascii_letters

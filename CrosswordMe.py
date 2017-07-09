@@ -1,6 +1,5 @@
-from random import sample
-from random import choice
-from string import ascii_letters
+from random impo.
+#Sorts the words by length descedning. Therefore the longes word is set firstfrom string import ascii_letters
 
 def print_puzzle(puzzle):
     #Prints the puzzle puzzle on a board
@@ -23,7 +22,8 @@ def fill_field_with_randoms(puzzle):
     return puzzle
 
 def word_input():
-    #Collects the words for the puzzle and sorts them by lenght descending
+    #Collects the words for the puzzle.
+    #Sorts the words by length descedning. Therefore the longes word is set first
 
     words = ["Test", "Noch", "Nocheiner", "loooooooooooooooooooooong"]
     for word in words:

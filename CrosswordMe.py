@@ -57,6 +57,13 @@ def set_direction_parameters(direction):
 
     return x_activator, y_activator
 
+def word_fits_in_range(current_word, puzzle_x_position, x_activator, puzzle_y_position, y_activator):
+    #Checks if the word exceeds the range for the current position. Returns true if it fits. Returns false Otherwise
+    if (puzzle_x_position + len(current_word)) * x_activator <= COLUMN_COUNT and (puzzle_y_position + len(current_word)) * y_activator <= LINE_COUNT:
+        return True
+    else:
+        return False
+
 def calculate_fits(puzzle, current_word):
 
     fit = 0
@@ -69,7 +76,7 @@ def calculate_fits(puzzle, current_word):
 
 
                 temp_fit = 0
-                if (puzzle_x_position + len(current_word)) * x_activator <= COLUMN_COUNT and (puzzle_y_position + len(current_word)) * y_activator <= LINE_COUNT: #Makes shure the temp Puzzle index doenst get out of range  to the right
+                if  word_fits_in_range(current_word, puzzle_x_position, x_activator, puzzle_y_position, y_activator):
 
                     for word_position in range(len(current_word)):
 

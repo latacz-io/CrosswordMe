@@ -71,6 +71,14 @@ def word_matches_position(current_word, word_position, puzzle_x_position, x_acti
     else:
         return False
 
+def puzzle_position_is_empty(word_position, puzzle_x_position, x_activator, puzzle_y_position, y_activator):
+    #Checks if the current position on the board is empty
+    if puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] == " ":
+        return True
+    else:
+        return False
+
+
 def calculate_fits(puzzle, current_word):
 
     fit = 0
@@ -91,10 +99,11 @@ def calculate_fits(puzzle, current_word):
 
                             temp_fit += 1
 
-                        elif puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != current_word[word_position] and puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != " ": #if the ltter doesn match and the puzzle postion isnt empty (" ") this breaks the loop
+                        else: #if the letter doesn match and the puzzle postion
+                            if not puzzle_position_is_empty(word_position, puzzle_x_position, x_activator, puzzle_y_position, y_activator):
 
-                            temp_fit = -1
-                            break
+                                temp_fit = -1
+                                break
 
                     if temp_fit == len(current_word): #In case a word fits perfectly into another. Also in case a word fits perfectly into a combination of other (which is unlikely tho)
 
@@ -112,7 +121,7 @@ def calculate_fits(puzzle, current_word):
 
     if fit == 0: #If there is no fit
 
-        start_x_position = 0 #this is used for breaking out of the for loops
+        start_x_position = 0 #Set the variable to zero so it can be checked for the break of the for loops laters
 
         for puzzle_y_position in sample(range(LINE_COUNT), k = LINE_COUNT): #loops through every position in the lines in random order
             for puzzle_x_position in sample(range(COLUMN_COUNT), k = COLUMN_COUNT): #loops through every position in the columns in random order

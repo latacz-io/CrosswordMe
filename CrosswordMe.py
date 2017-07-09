@@ -37,7 +37,9 @@ def word_input():
 def define_field_size():
     #defines field size
     global LINE_COUNT
-    LINE_COUNT = 12
+    LINE_COUNT =    #Finds the best fit in the current puzzle for the word and returns the postion and direction
+    #The function checks the postion and directions in random order. The first Highscore wins.
+    #The funtion return a random position is no overlap fits can be found12
     global COLUMN_COUNT
     COLUMN_COUNT = 12
 
@@ -110,8 +112,10 @@ def set_word_randomly(puzzle, current_word):
     return start_x_position, start_y_position, word_direction
 
 
-def calculate_fits(puzzle, current_word):
-
+def find_best_fit(puzzle, current_word):
+    #Finds the best fit in the current puzzle for the word and returns the postion and direction
+    #The function checks the postion and directions in random order. The first Highscore wins.
+    #The funtion return a random position is no overlap fits can be found
     fit = 0
 
     for puzzle_y_position in sample(range(LINE_COUNT), k = LINE_COUNT): #loops through every position in the lines in random order
@@ -184,7 +188,7 @@ def create_puzzle(words):
 
 
         else: #For every word after the first one
-            start_x_position, start_y_position, word_direction = calculate_fits(puzzle, words[word_index])
+            start_x_position, start_y_position, word_direction = find_best_fit(puzzle, words[word_index])
             if start_x_position == -1: #means the word cant be fit
                 print("The word " + words[word_index] + " could not be fit in the puzzle")
 

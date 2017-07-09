@@ -1,4 +1,3 @@
-from random import randint
 from random import sample
 from random import choice
 from string import ascii_letters

@@ -87,9 +87,9 @@ def set_word_randomly(puzzle, current_word):
             for fit_direction in sample(range(3), k = 3): #loops through every direction in random order
 
                 x_activator, y_activator = set_direction_parameters(fit_direction)
-                if (puzzle_x_position + len(current_word)) * x_activator <= COLUMN_COUNT and (puzzle_y_position + len(current_word)) * y_activator <= LINE_COUNT: #Makes shure the temp Puzzle index doenst get out of range  to the right
+                if word_fits_in_range(current_word, puzzle_x_position, x_activator, puzzle_y_position, y_activator):
                     for word_position in range(len(current_word)):
-                        if puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != current_word[word_position] and puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] != " ": #if the ltter doesn match and the puzzle postion isnt empty (" ") this breaks the loop
+                        if not word_matches_position(current_word, word_position, puzzle_x_position, x_activator, puzzle_y_position, y_activator): and not puzzle_position_is_empty(word_position, puzzle_x_position, x_activator, puzzle_y_position, y_activator):
                             #the word doesnt fit in this position, breaks out of word loop
                             start_x_position = -1
                             start_y_position = -1
@@ -107,8 +107,9 @@ def set_word_randomly(puzzle, current_word):
         if start_x_position > 0: #breaks out of for y loop, if a fitting position has been found
             break
 
-
     return start_x_position, start_y_position, word_direction
+
+
 def calculate_fits(puzzle, current_word):
 
     fit = 0
@@ -125,7 +126,7 @@ def calculate_fits(puzzle, current_word):
 
                     for word_position in range(len(current_word)):
 
-                        if  word_matches_position(current_word, word_position, puzzle_x_position, x_activator, puzzle_y_position, y_activator):
+                        if word_matches_position(current_word, word_position, puzzle_x_position, x_activator, puzzle_y_position, y_activator):
 
                             temp_fit += 1
 
@@ -151,7 +152,7 @@ def calculate_fits(puzzle, current_word):
 
 
     if fit == 0: #If there is no fit
-
+        start_x_position, start_y_position, word_direction = set_word_randomly(puzzle, current_word)
 
 
     return start_x_position, start_y_position, word_direction
@@ -187,7 +188,7 @@ def create_puzzle(words):
             if start_x_position == -1: #means the word cant be fit
                 print("The word " + words[word_index] + " could not be fit in the puzzle")
 
-            else:
+            else: #A fit has beeen found
                 puzzle = write_puzzle(puzzle, words[word_index], start_x_position, start_y_position, word_direction)
 
 

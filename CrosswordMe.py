@@ -64,6 +64,13 @@ def word_fits_in_range(current_word, puzzle_x_position, x_activator, puzzle_y_po
     else:
         return False
 
+def word_matches_position(current_word, word_position, puzzle_x_position, x_activator, puzzle_y_position, y_activator):
+    #Checks if the letter of the current word matches the letter on the board
+    if puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] == current_word[word_position]:
+        return True
+    else:
+        return False
+
 def calculate_fits(puzzle, current_word):
 
     fit = 0
@@ -80,7 +87,7 @@ def calculate_fits(puzzle, current_word):
 
                     for word_position in range(len(current_word)):
 
-                        if puzzle[puzzle_y_position + (word_position * y_activator)][puzzle_x_position + (word_position * x_activator)] == current_word[word_position]: #increases temp fit, if the letter of word and puzzle match
+                        if  word_matches_position(current_word, word_position, puzzle_x_position, x_activator, puzzle_y_position, y_activator):
 
                             temp_fit += 1
 

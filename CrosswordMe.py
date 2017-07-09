@@ -1,4 +1,6 @@
-from random impo.
+from random import sample
+from random import choice
+from string import ascii_letters
 #Sorts the words by length descedning. Therefore the longes word is set firstfrom string import ascii_letters
 
 def print_puzzle(puzzle):

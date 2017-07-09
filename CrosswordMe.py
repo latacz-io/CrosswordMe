@@ -99,19 +99,20 @@ def calculate_fits(puzzle, current_word):
 
                             temp_fit += 1
 
-                        else: #if the letter doesn match and the puzzle postion
+                        else:
+                            #if the letter doesn match and the puzzle postion
                             if not puzzle_position_is_empty(word_position, puzzle_x_position, x_activator, puzzle_y_position, y_activator):
-
-                                temp_fit = -1
-                                break
+                                # if the postion is not empty
+                                temp_fit = -1 #Immitates a False
+                                break #Breaks out of the for loop (--> Stops checking the current_word)
 
                     if temp_fit == len(current_word): #In case a word fits perfectly into another. Also in case a word fits perfectly into a combination of other (which is unlikely tho)
 
-                            temp_fit = -1
+                        temp_fit = -1
 
 
                     elif temp_fit > fit: #defines position and direction if its the best fit so far. With > it takes the first fit, with >= it takes the last. A non fit has to be "-1" if this is >=. Otherwise the last position of a non fit will be written into the variables. This doesnt matter as long as a fit = 0 is overwritten in the end. But stil, temporary there would be wrong informations in the variables
-                        #print(temp_fit, current_word)
+
                         fit = temp_fit
                         start_x_position = puzzle_x_position
                         start_y_position = puzzle_y_position
@@ -121,7 +122,7 @@ def calculate_fits(puzzle, current_word):
 
     if fit == 0: #If there is no fit
 
-        start_x_position = 0 #Set the variable to zero so it can be checked for the break of the for loops laters
+        start_x_position = 0 #Set the variable to zero so it can be checked for the break of the for loops later
 
         for puzzle_y_position in sample(range(LINE_COUNT), k = LINE_COUNT): #loops through every position in the lines in random order
             for puzzle_x_position in sample(range(COLUMN_COUNT), k = COLUMN_COUNT): #loops through every position in the columns in random order

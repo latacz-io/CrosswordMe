@@ -80,7 +80,7 @@ def puzzle_position_is_empty(word_position, puzzle_x_position, x_activator, puzz
     else:
         return False
 
-def set_word_randomly(puzzle, current_word):
+def find_random_position(Set the first word
     #Finds a random position and direction for a word and returns the coordinates and the direction. Returns -1 for all three if the word cant be fit into the current puzzle
     start_x_position = 0 #Set the variable to zero so it can be checked for the break of the for loops later
 
@@ -155,8 +155,8 @@ def find_best_fit(puzzle, current_word):
 
 
 
-    if fit == 0: #If there is no fit
-        start_x_position, start_y_position, word_direction = set_word_randomly(puzzle, current_word)
+    if fit == 0: #Set the first word
+        start_x_position, start_y_position, word_direction = find_random_position(puzzle, current_word)
 
 
     return start_x_position, start_y_position, word_direction
@@ -180,10 +180,8 @@ def create_puzzle(words):
 
     for word_index in range(len(words)): #loops through every word in the words list
 
-        if word_index == 0: #Special case for the first word which is written in a random position in a random direction on the board
-            word_direction = randint(0,2) #Random direction
-            start_x_position = randint(0, COLUMN_COUNT-len(words[word_index])) #Random x position within the boundries
-            start_y_position = randint(0, LINE_COUNT-len(words[word_index])) #Random y position within the boundries
+        if word_index == 0: #Set the first word
+            start_x_position, start_y_position, word_direction = find_random_position(puzzle, words[word_index])
             puzzle = write_puzzle(puzzle, words[word_index], start_x_position, start_y_position, word_direction)
 
 

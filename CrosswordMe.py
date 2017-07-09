@@ -1,13 +1,13 @@
 from random import sample
 from random import choice
 from string import ascii_letters
-#Sorts the words by length descedning. Therefore the longes word is set firstfrom string import ascii_letters
+
 
 def print_puzzle(puzzle):
     #Prints the puzzle puzzle on a board
-    for line in range(LINE_COUNT):
-        for position in range(COLUMN_COUNT):
-            print(str(puzzle[line][position]).upper() + " ", end="") #Prints character in current position
+    for puzzle_y_position in range(LINE_COUNT):
+        for puzzle_x_position in range(COLUMN_COUNT):
+            print(str(puzzle[puzzle_y_position][puzzle_x_position]).upper() + " ", end="") #Prints character in current position
         print() #Prints Newline
 
 def fill_field_with_randoms(puzzle):
@@ -39,11 +39,9 @@ def word_input():
 def define_field_size():
     #defines field size
     global LINE_COUNT
-    LINE_COUNT =    #Finds the best fit in the current puzzle for the word and returns the postion and direction
-    #The function checks the postion and directions in random order. The first Highscore wins.
-    #The funtion return a random position is no overlap fits can be found12
+    LINE_COUNT = 12
     global COLUMN_COUNT
-    COLUMN_COUNT = 12
+    COLUMN_COUNT = LINE_COUNT
 
 def set_direction_parameters(direction):
     #returns direction parameters

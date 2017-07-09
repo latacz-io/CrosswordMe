@@ -44,7 +44,7 @@ def define_field_size():
     COLUMN_COUNT = LINE_COUNT
 
 def set_direction_parameters(direction):
-    #returns direction parameters
+    #Takes the direction and returns the parameters so the loops only trigger the right direction
     if direction == 0: #horizontal
         x_activator = 1
         y_activator = 0
@@ -80,7 +80,7 @@ def puzzle_position_is_empty(word_position, puzzle_x_position, x_activator, puzz
     else:
         return False
 
-def find_random_position(Set the first word
+def find_random_position(Set the first word):
     #Finds a random position and direction for a word and returns the coordinates and the direction. Returns -1 for all three if the word cant be fit into the current puzzle
     start_x_position = 0 #Set the variable to zero so it can be checked for the break of the for loops later
 
@@ -162,8 +162,8 @@ def find_best_fit(puzzle, current_word):
     return start_x_position, start_y_position, word_direction
 
 
-def write_puzzle(puzzle, current_word, start_x_position, start_y_position, word_direction):
-
+def write_word(puzzle, current_word, start_x_position, start_y_position, word_direction):
+    #Writes the current_word in the puzzle
     x_activator, y_activator = set_direction_parameters(word_direction)
 
     for word_position in range(len(current_word)): #Loops through position within the array
@@ -182,7 +182,7 @@ def create_puzzle(words):
 
         if word_index == 0: #Set the first word
             start_x_position, start_y_position, word_direction = find_random_position(puzzle, words[word_index])
-            puzzle = write_puzzle(puzzle, words[word_index], start_x_position, start_y_position, word_direction)
+            puzzle = write_word(puzzle, words[word_index], start_x_position, start_y_position, word_direction)
 
 
         else: #For every word after the first one
@@ -191,7 +191,7 @@ def create_puzzle(words):
                 print("The word " + words[word_index] + " could not be fit in the puzzle")
 
             else: #A fit has beeen found
-                puzzle = write_puzzle(puzzle, words[word_index], start_x_position, start_y_position, word_direction)
+                puzzle = write_word(puzzle, words[word_index], start_x_position, start_y_position, word_direction)
 
 
 

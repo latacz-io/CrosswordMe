@@ -30,11 +30,17 @@ def word_input():
     #Collects the words for the puzzle.
     #Sorts the words by length descedning. Therefore the longes word is set first
 
-    words = ["Test", "Noch", "Nocheiner", "loooooooooooooooooooooong"]
+    words = ["Test", "Noch", "Nocheiner", "loooooooooooooooooooooong", "zw2ei"]
     for word in words:
         if len(word) > LINE_COUNT:
             print(word + " has " + str(len(word)) + " letters. A maximum length of " + str(LINE_COUNT) + " Letters is possible. " + word + " has been ommitted" )
             words.remove(word)
+
+        try: #Checks whether the word is in ascii
+            word.encode("ascii")
+        except UnicodeDecodeError:
+            print("The word " + word + " contains non compatible letters. Only the letters " + ascii_letters + " are allowed")
+
     words.sort(key=len, reverse=True)
 
     return words

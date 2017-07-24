@@ -1,8 +1,7 @@
 #Fill in the words in line 32 you want to be set
 #Comment out fill_field_with_randoms call in the end to see where your words are being set (will be at a different postion the next time, since a new puzzle will be generated)
 
-from random import sample
-from random import choice
+from random import sample, choice
 from string import ascii_letters
 
 
@@ -30,7 +29,7 @@ def word_input():
     #Collects the words for the puzzle.
     #Sorts the words by length descedning. Therefore the longes word is set first
 
-    words = ["Test", "Noch", "Nocheiner", "loooooooooooooooooooooong", "zw2ei"]
+    words = ["Europython", "Rimini", "Bologna", "Amore", "coala", "Beach", "Sea", "Umbrellas", "Hamburg"]
     for word in words:
         if len(word) > LINE_COUNT:
             print(word + " has " + str(len(word)) + " letters. A maximum length of " + str(LINE_COUNT) + " Letters is possible. " + word + " has been ommitted" )
@@ -145,7 +144,10 @@ def find_best_fit(puzzle, current_word):
 
                         else:
                             #if the letter doesn match and the puzzle postion
-                            if not puzzle_position_is_empty(puzzle, word_position, puzzle_x_position, x_activator, puzzle_y_position, y_activator):
+                            if not puzzle_position_is_empty(
+                                    puzzle, word_position, puzzle_x_position,
+                                    x_activator, puzzle_y_position,
+                                    y_activator):
                                 # if the postion is not empty
                                 temp_fit = -1 #Immitates a False
                                 break #Breaks out of the for loop (--> Stops checking the current_word)
@@ -191,6 +193,9 @@ def create_puzzle(words):
 
         if word_index == 0: #Set the first word
             start_x_position, start_y_position, word_direction = find_random_position(puzzle, words[word_index])
+            word_direction = 0
+            start_y_position = 3
+            start_x_position = 2
             puzzle = write_word(puzzle, words[word_index], start_x_position, start_y_position, word_direction)
 
 
@@ -210,5 +215,18 @@ def create_puzzle(words):
 define_field_size()
 words = word_input()
 puzzle = create_puzzle(words)
-puzzle = fill_field_with_randoms(puzzle)
 print_puzzle(puzzle)
+
+fill_choice = ""
+while fill_choice != "Y" and fill_choice != "N":
+
+    fill_choice = input("Do you want to fill the puzzle with randoms? (Y/N)")
+    fill_choice = fill_choice.upper()
+    if fill_choice == "Y":
+
+        puzzle = fill_field_with_randoms(puzzle)
+        print_puzzle(puzzle)
+    elif fill_choice == "N":
+        break
+    else:
+        print("Input not valid")

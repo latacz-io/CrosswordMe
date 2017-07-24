@@ -29,8 +29,8 @@ def word_input():
     #Collects the words for the puzzle.
     #Sorts the words by length descedning. Therefore the longes word is set first
 
-    words = ["Europython", "Rimini", "Bologna", "Amore", "coala", "Beach", "Sea", "Umbrellas", "Hamburg"]
-    for word in words:
+    words = ["looooooooooooooooooooooooooooooooong", "Europython", "Rimini", "Bologna","looooooooooooooooooooooooooooooooxxong", "Amore", "coala", "Beach", "Sea", "Umbrellas", "Hamburg"]
+    for word in reversed(words):
         if len(word) > LINE_COUNT:
             print(word + " has " + str(len(word)) + " letters. A maximum length of " + str(LINE_COUNT) + " Letters is possible. " + word + " has been ommitted" )
             words.remove(word)

@@ -3,7 +3,12 @@
 
 from random import sample, choice
 from string import ascii_letters
+from enum import Enum
 
+class directions(Enum):
+    HORIZONTAL = 0
+    VERTICAL = 1
+    DIAGONAL = 2
 
 def print_puzzle(puzzle):
     #Prints the puzzle puzzle on a board
@@ -65,6 +70,9 @@ def set_direction_parameters(direction):
         x_activator = 1
         y_activator = 1
 
+    else:
+        print("Didnt receive direction. Value received: " + str(direction))
+
     return x_activator, y_activator
 
 def word_fits_in_range(current_word, puzzle_x_position, x_activator, puzzle_y_position, y_activator):
@@ -94,9 +102,9 @@ def find_random_position(puzzle, current_word):
 
     for puzzle_y_position in sample(range(LINE_COUNT), k = LINE_COUNT): #loops through every position in the lines in random order
         for puzzle_x_position in sample(range(COLUMN_COUNT), k = COLUMN_COUNT): #loops through every position in the columns in random order
-            for fit_direction in sample(range(3), k = 3): #loops through every direction in random order
+            for fit_direction in directions: #loops through every direction in random order
 
-                x_activator, y_activator = set_direction_parameters(fit_direction)
+                x_activator, y_activator = set_direction_parameters(fit_direction.value)
                 if word_fits_in_range(current_word, puzzle_x_position, x_activator, puzzle_y_position, y_activator):
                     for word_position in range(len(current_word)):
                         if not word_matches_position(puzzle, current_word, word_position, puzzle_x_position, x_activator, puzzle_y_position, y_activator) and not puzzle_position_is_empty(puzzle, word_position, puzzle_x_position, x_activator, puzzle_y_position, y_activator):
@@ -110,7 +118,7 @@ def find_random_position(puzzle, current_word):
                         #for is exceted without a break --> the word fits in this position
                         start_x_position = puzzle_x_position
                         start_y_position = puzzle_y_position
-                        word_direction = fit_direction
+                        word_direction = fit_direction.value
                         break #breaks out of for direction loop, if a fitting position has been found
             if start_x_position > 0: #breaks out of for x loop, if a fitting position has been found
                 break
@@ -128,9 +136,9 @@ def find_best_fit(puzzle, current_word):
 
     for puzzle_y_position in sample(range(LINE_COUNT), k = LINE_COUNT): #loops through every position in the lines in random order
         for puzzle_x_position in sample(range(COLUMN_COUNT), k = COLUMN_COUNT): #loops through every position in the columns in random order
-            for fit_direction in sample(range(3), k = 3):
+            for fit_direction in directions:
 
-                x_activator, y_activator = set_direction_parameters(fit_direction)
+                x_activator, y_activator = set_direction_parameters(fit_direction.value)
 
 
                 temp_fit = 0
@@ -162,7 +170,7 @@ def find_best_fit(puzzle, current_word):
                         fit = temp_fit
                         start_x_position = puzzle_x_position
                         start_y_position = puzzle_y_position
-                        word_direction = fit_direction
+                        word_direction = fit_direction.value
 
 
 

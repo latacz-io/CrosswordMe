@@ -9,7 +9,7 @@ def print_puzzle(puzzle):
     #Prints the puzzle puzzle on a board
     for puzzle_y_position in range(LINE_COUNT):
         for puzzle_x_position in range(COLUMN_COUNT):
-            print(str(puzzle[puzzle_y_position][puzzle_x_position]).upper() + " ", end="") #Prints character in current position
+            print(str(puzzle[puzzle_y_position][puzzle_x_position]).upper(), end=" ") #Prints character in current position
         print() #Prints Newline
 
 def fill_field_with_randoms(puzzle):

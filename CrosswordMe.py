@@ -4,6 +4,7 @@
 from random import sample, choice
 from string import ascii_letters
 from enum import Enum
+from itertools import product
 
 
 class directions(Enum):
@@ -25,13 +26,12 @@ def print_puzzle(puzzle):
 def fill_field_with_randoms(puzzle):
     #Fills the rest of the free space (represented by " ") with random letters
 
-    for puzzle_y_position in range(LINE_COUNT):
-        for puzzle_x_position in range(COLUMN_COUNT):
-
-            if puzzle[puzzle_y_position][
-                    puzzle_x_position] == " ":  #If the position is empty
-                puzzle[puzzle_y_position][puzzle_x_position] = choice(
-                    ascii_letters)
+    for puzzle_y_position, puzzle_x_position in product(range(LINE_COUNT), range(COLUMN_COUNT)):
+        
+        if puzzle[puzzle_y_position][
+                puzzle_x_position] == " ":  #If the position is empty
+            puzzle[puzzle_y_position][puzzle_x_position] = choice(
+                ascii_letters)
 
     return puzzle
 

@@ -1,4 +1,0 @@
-[python]
-files = **.py
-bears = PEP8Bear
-pep_ignore = E501

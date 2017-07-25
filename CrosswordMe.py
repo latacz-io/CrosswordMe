@@ -9,8 +9,8 @@ from itertools import product
 
 class directions(Enum):
     HORIZONTAL = 0
-    VERTICAL = 1
-    DIAGONAL = 2
+    VERTICAL = 15
+    DIAGONAL = 25
 
 
 def print_puzzle(puzzle):
@@ -27,7 +27,7 @@ def fill_field_with_randoms(puzzle):
     #Fills the rest of the free space (represented by " ") with random letters
 
     for puzzle_y_position, puzzle_x_position in product(range(LINE_COUNT), range(COLUMN_COUNT)):
-        
+
         if puzzle[puzzle_y_position][
                 puzzle_x_position] == " ":  #If the position is empty
             puzzle[puzzle_y_position][puzzle_x_position] = choice(
@@ -41,7 +41,7 @@ def word_input():
     #Sorts the words by length descedning. Therefore the longes word is set first
 
     words = [
-        "looooooooooooooooooooooooooooooooong", "Europython", "Rimini",
+        "looooooooooooooooooooooooooooooooong", "EuropythonAAAAAAAAAAAAAAAAAAAA", "Rimini",
         "Bologna", "looooooooooooooooooooooooooooooooxxong", "Amore", "coala",
         "Beach", "Sea", "Umbrellas", "Hamburg"
     ]
@@ -74,17 +74,21 @@ def define_field_size():
 
 def set_direction_parameters(direction):
     #Takes the direction and returns the parameters so the loops only trigger the right direction
-    if direction == 0:  #horizontal
+    print("Direction Value: " + str(direction))
+    if direction == directions.HORIZONTAL:  #horizontal
         x_activator = 1
         y_activator = 0
 
-    elif direction == 1:  #vertical
+    elif direction == directions.VERTICAL:  #vertical
         x_activator = 0
         y_activator = 1
 
-    elif direction == 2:  #diagonal
+    elif direction == directions.DIAGONAL:  #diagonal
         x_activator = 1
         y_activator = 1
+
+    else:
+        print("no value")
 
     return x_activator, y_activator
 
@@ -135,7 +139,7 @@ def find_random_position(puzzle, current_word):
             for fit_direction in directions:  #loops through every direction in random order
 
                 x_activator, y_activator = set_direction_parameters(
-                    fit_direction.value)
+                    fit_direction)
                 if word_fits_in_range(current_word, puzzle_x_position,
                                       x_activator, puzzle_y_position,
                                       y_activator):
@@ -156,9 +160,10 @@ def find_random_position(puzzle, current_word):
 
                     else:
                         #for is exceted without a break --> the word fits in this position
+                        
                         start_x_position = puzzle_x_position
                         start_y_position = puzzle_y_position
-                        word_direction = fit_direction.value
+                        word_direction = fit_direction
                         break  #breaks out of for direction loop, if a fitting position has been found
             if start_x_position > 0:  #breaks out of for x loop, if a fitting position has been found
                 break
@@ -183,7 +188,7 @@ def find_best_fit(puzzle, current_word):
             for fit_direction in directions:
 
                 x_activator, y_activator = set_direction_parameters(
-                    fit_direction.value)
+                    fit_direction)
 
                 temp_fit = 0
                 if word_fits_in_range(current_word, puzzle_x_position,
@@ -220,7 +225,8 @@ def find_best_fit(puzzle, current_word):
                         fit = temp_fit
                         start_x_position = puzzle_x_position
                         start_y_position = puzzle_y_position
-                        word_direction = fit_direction.value
+                        word_direction = fit_direction
+
 
     if fit == 0:  #Set the first word
         start_x_position, start_y_position, word_direction = find_random_position(
@@ -255,7 +261,7 @@ def create_puzzle(words):
         if word_index == 0:  #Set the first word
             start_x_position, start_y_position, word_direction = find_random_position(
                 puzzle, words[word_index])
-            word_direction = 0
+            word_direction = directions.HORIZONTAL
             start_y_position = 3
             start_x_position = 2
             puzzle = write_word(puzzle, words[word_index], start_x_position,

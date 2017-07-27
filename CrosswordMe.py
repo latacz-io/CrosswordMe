@@ -39,6 +39,7 @@ def fill_field_with_randoms(puzzle):
 def word_input():
     #Collects the words for the puzzle.
     #Sorts the words by length descedning. Therefore the longes word is set first
+    #Gets messed up if a contain something else than ascii
 
     words = [
         "looooooooooooooooooooooooooooooooong", "EuropythonAAAAAAAAAAAAAAAAAAAA", "Rimini",
@@ -52,13 +53,7 @@ def word_input():
                   " Letters is possible. " + word + " has been ommitted")
             words.remove(word)
 
-        try:  #Checks whether the word is in ascii
-            word.encode("ascii")
-        except UnicodeDecodeError:
-            print("The word " + word +
-                  " contains non compatible letters. Only the letters " +
-                  ascii_letters + " are allowed")
-
+        
     words.sort(key=len, reverse=True)
 
     return words
@@ -160,7 +155,7 @@ def find_random_position(puzzle, current_word):
 
                     else:
                         #for is exceted without a break --> the word fits in this position
-                        
+
                         start_x_position = puzzle_x_position
                         start_y_position = puzzle_y_position
                         word_direction = fit_direction

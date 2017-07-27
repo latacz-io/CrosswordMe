@@ -53,7 +53,7 @@ def word_input():
                   " Letters is possible. " + word + " has been ommitted")
             words.remove(word)
 
-        
+
     words.sort(key=len, reverse=True)
 
     return words
@@ -69,7 +69,7 @@ def define_field_size():
 
 def set_direction_parameters(direction):
     #Takes the direction and returns the parameters so the loops only trigger the right direction
-    print("Direction Value: " + str(direction))
+
     if direction == directions.HORIZONTAL:  #horizontal
         x_activator = 1
         y_activator = 0
@@ -82,8 +82,7 @@ def set_direction_parameters(direction):
         x_activator = 1
         y_activator = 1
 
-    else:
-        print("no value")
+    
 
     return x_activator, y_activator
 

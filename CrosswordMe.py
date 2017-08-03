@@ -15,12 +15,12 @@ class directions(Enum):
 
 def print_puzzle(puzzle):
     #Prints the puzzle puzzle on a board
-    for puzzle_y_position in range(LINE_COUNT):
-        for puzzle_x_position in range(COLUMN_COUNT):
-            print(
-                str(puzzle[puzzle_y_position][puzzle_x_position]).upper(),
-                end=" ")  #Prints character in current position
-        print()  #Prints Newline
+    for puzzle_y_position, puzzle_x_position in product(range(LINE_COUNT), range(COLUMN_COUNT)):
+        print(
+            str(puzzle[puzzle_y_position][puzzle_x_position]).upper(),
+            end=" ")  #Prints character in current position
+        if puzzle_x_position + 1 == COLUMN_COUNT: #Time for a new line
+            print()  #Prints Newline
 
 
 def fill_field_with_randoms(puzzle):
@@ -82,7 +82,7 @@ def set_direction_parameters(direction):
         x_activator = 1
         y_activator = 1
 
-    
+
 
     return x_activator, y_activator
 

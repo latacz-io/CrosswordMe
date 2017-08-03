@@ -124,45 +124,36 @@ def find_random_position(puzzle, current_word):
     #Finds a random position and direction for a word and returns the coordinates and the direction. Returns -1 for all three if the word cant be fit into the current puzzle
     start_x_position = 0  #Set the variable to zero so it can be checked for the break of the for loops later
 
-    for puzzle_y_position in sample(
-            range(LINE_COUNT), k=LINE_COUNT
-    ):  #loops through every position in the lines in random order
-        for puzzle_x_position in sample(
-                range(COLUMN_COUNT), k=COLUMN_COUNT
-        ):  #loops through every position in the columns in random order
-            for fit_direction in directions:  #loops through every direction in random order
+    for puzzle_y_position, puzzle_x_position, fit_direction in product( sample( range(LINE_COUNT), k=LINE_COUNT), sample(
+            range(COLUMN_COUNT), k=COLUMN_COUNT), sample(list(directions), k = 3)):  #loops through every position in the lines in random order
 
-                x_activator, y_activator = set_direction_parameters(
-                    fit_direction)
-                if word_fits_in_range(current_word, puzzle_x_position,
-                                      x_activator, puzzle_y_position,
-                                      y_activator):
-                    for word_position in range(len(current_word)):
-                        if not word_matches_position(
-                                puzzle, current_word, word_position,
-                                puzzle_x_position, x_activator,
-                                puzzle_y_position,
-                                y_activator) and not puzzle_position_is_empty(
-                                    puzzle, word_position, puzzle_x_position,
-                                    x_activator, puzzle_y_position,
-                                    y_activator):
-                            #the word doesnt fit in this position, breaks out of word loop
-                            start_x_position = -1
-                            start_y_position = -1
-                            word_direction = -1
-                            break
+        x_activator, y_activator = set_direction_parameters(
+            fit_direction)
+        if word_fits_in_range(current_word, puzzle_x_position,
+                              x_activator, puzzle_y_position,
+                              y_activator):
+            for word_position in range(len(current_word)):
+                if not word_matches_position(
+                        puzzle, current_word, word_position,
+                        puzzle_x_position, x_activator,
+                        puzzle_y_position,
+                        y_activator) and not puzzle_position_is_empty(
+                            puzzle, word_position, puzzle_x_position,
+                            x_activator, puzzle_y_position,
+                            y_activator):
+                    #the word doesnt fit in this position, breaks out of word loop
+                    start_x_position = -1
+                    start_y_position = -1
+                    word_direction = -1
+                    break
 
-                    else:
-                        #for is exceted without a break --> the word fits in this position
+            else:
+                #for is exceted without a break --> the word fits in this position
 
-                        start_x_position = puzzle_x_position
-                        start_y_position = puzzle_y_position
-                        word_direction = fit_direction
-                        break  #breaks out of for direction loop, if a fitting position has been found
-            if start_x_position > 0:  #breaks out of for x loop, if a fitting position has been found
-                break
-        if start_x_position > 0:  #breaks out of for y loop, if a fitting position has been found
-            break
+                start_x_position = puzzle_x_position
+                start_y_position = puzzle_y_position
+                word_direction = fit_direction
+                break  #breaks out of for direction loop, if a fitting position has been found
 
     return start_x_position, start_y_position, word_direction
 

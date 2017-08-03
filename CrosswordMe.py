@@ -164,56 +164,51 @@ def find_best_fit(puzzle, current_word):
     #The funtion return a random position is no overlap fits can be found
     fit = 0
 
-    for puzzle_y_position in sample(
-            range(LINE_COUNT), k=LINE_COUNT
-    ):  #loops through every position in the lines in random order
-        for puzzle_x_position in sample(
-                range(COLUMN_COUNT), k=COLUMN_COUNT
-        ):  #loops through every position in the columns in random order
-            for fit_direction in directions:
+    for puzzle_y_position, puzzle_x_position, fit_direction in product( sample( range(LINE_COUNT), k=LINE_COUNT), sample(
+            range(COLUMN_COUNT), k=COLUMN_COUNT), sample(list(directions), k = 3)):
 
-                x_activator, y_activator = set_direction_parameters(
-                    fit_direction)
+        x_activator, y_activator = set_direction_parameters(
+            fit_direction)
 
-                temp_fit = 0
-                if word_fits_in_range(current_word, puzzle_x_position,
-                                      x_activator, puzzle_y_position,
-                                      y_activator):
+        temp_fit = 0
+        if word_fits_in_range(current_word, puzzle_x_position,
+                              x_activator, puzzle_y_position,
+                              y_activator):
 
-                    for word_position in range(len(current_word)):
+            for word_position in range(len(current_word)):
 
-                        if word_matches_position(
-                                puzzle, current_word, word_position,
-                                puzzle_x_position, x_activator,
-                                puzzle_y_position, y_activator):
+                if word_matches_position(
+                        puzzle, current_word, word_position,
+                        puzzle_x_position, x_activator,
+                        puzzle_y_position, y_activator):
 
-                            temp_fit += 1
+                    temp_fit += 1
 
-                        else:
-                            #if the letter doesn match and the puzzle postion
-                            if not puzzle_position_is_empty(
-                                    puzzle, word_position, puzzle_x_position,
-                                    x_activator, puzzle_y_position,
-                                    y_activator):
-                                # if the postion is not empty
-                                temp_fit = -1  #Immitates a False
-                                break  #Breaks out of the for loop (--> Stops checking the current_word)
+                else:
+                    #if the letter doesn match and the puzzle postion
+                    if not puzzle_position_is_empty(
+                            puzzle, word_position, puzzle_x_position,
+                            x_activator, puzzle_y_position,
+                            y_activator):
+                        # if the postion is not empty
+                        temp_fit = -1  #Immitates a False
+                        break  #Breaks out of the for loop (--> Stops checking the current_word)
 
-                    if temp_fit == len(
-                            current_word
-                    ):  #In case a word fits perfectly into another. Also in case a word fits perfectly into a combination of other (which is unlikely tho)
+            if temp_fit == len(
+                    current_word
+            ):  #In case a word fits perfectly into another. Also in case a word fits perfectly into a combination of other (which is unlikely tho)
 
-                        temp_fit = -1
+                temp_fit = -1
 
-                    elif temp_fit > fit:  #defines position and direction if its the best fit so far. With > it takes the first fit, with >= it takes the last. A non fit has to be "-1" if this is >=. Otherwise the last position of a non fit will be written into the variables. This doesnt matter as long as a fit = 0 is overwritten in the end. But stil, temporary there would be wrong informations in the variables
+            elif temp_fit > fit:  #defines position and direction if its the best fit so far. With > it takes the first fit, with >= it takes the last. A non fit has to be "-1" if this is >=. Otherwise the last position of a non fit will be written into the variables. This doesnt matter as long as a fit = 0 is overwritten in the end. But stil, temporary there would be wrong informations in the variables
 
-                        fit = temp_fit
-                        start_x_position = puzzle_x_position
-                        start_y_position = puzzle_y_position
-                        word_direction = fit_direction
+                fit = temp_fit
+                start_x_position = puzzle_x_position
+                start_y_position = puzzle_y_position
+                word_direction = fit_direction
 
 
-    if fit == 0:  #Set the first word
+    if fit == 0:  # Means that no fit has been found and calls for a random position
         start_x_position, start_y_position, word_direction = find_random_position(
             puzzle, current_word)
 

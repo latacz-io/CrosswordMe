@@ -15,18 +15,20 @@ class directions(Enum):
 
 def print_puzzle(puzzle):
     #Prints the puzzle puzzle on a board
-    for puzzle_y_position, puzzle_x_position in product(range(LINE_COUNT), range(COLUMN_COUNT)):
+    for puzzle_y_position, puzzle_x_position in product(
+            range(LINE_COUNT), range(COLUMN_COUNT)):
         print(
             str(puzzle[puzzle_y_position][puzzle_x_position]).upper(),
             end=" ")  #Prints character in current position
-        if puzzle_x_position + 1 == COLUMN_COUNT: #Time for a new line
+        if puzzle_x_position + 1 == COLUMN_COUNT:  #Time for a new line
             print()  #Prints Newline
 
 
 def fill_field_with_randoms(puzzle):
     #Fills the rest of the free space (represented by " ") with random letters
 
-    for puzzle_y_position, puzzle_x_position in product(range(LINE_COUNT), range(COLUMN_COUNT)):
+    for puzzle_y_position, puzzle_x_position in product(
+            range(LINE_COUNT), range(COLUMN_COUNT)):
 
         if puzzle[puzzle_y_position][
                 puzzle_x_position] == " ":  #If the position is empty
@@ -42,9 +44,8 @@ def word_input():
     #Gets messed up if a contain something else than ascii
 
     words = [
-        "Rimini",
-        "Bologna", "Amore", "coala",
-        "Beach", "Sea", "Umbrellas", "Hamburg"
+        "Rimini", "Bologna", "Amore", "coala", "Beach", "Sea", "Umbrellas",
+        "Hamburg"
     ]
     for word in reversed(words):
         if len(word) > LINE_COUNT:
@@ -52,7 +53,6 @@ def word_input():
                 word)) + " letters. A maximum length of " + str(LINE_COUNT) +
                   " Letters is possible. " + word + " has been ommitted")
             words.remove(word)
-
 
     #words.sort(key=len, reverse=True)
 
@@ -81,8 +81,6 @@ def set_direction_parameters(direction):
     elif direction == directions.DIAGONAL:  #diagonal
         x_activator = 1
         y_activator = 1
-
-
 
     return x_activator, y_activator
 
@@ -124,23 +122,25 @@ def find_random_position(puzzle, current_word):
     #Finds a random position and direction for a word and returns the coordinates and the direction. Returns -1 for all three if the word cant be fit into the current puzzle
     start_x_position = 0  #Set the variable to zero so it can be checked for the break of the for loops later
 
-    for puzzle_y_position, puzzle_x_position, fit_direction in product( sample( range(LINE_COUNT), k=LINE_COUNT), sample(
-            range(COLUMN_COUNT), k=COLUMN_COUNT), sample(list(directions), k = 3)):  #loops through every position in the lines in random order
+    for puzzle_y_position, puzzle_x_position, fit_direction in product(
+            sample(
+                range(LINE_COUNT), k=LINE_COUNT),
+            sample(
+                range(COLUMN_COUNT), k=COLUMN_COUNT),
+            sample(
+                list(directions), k=3)
+    ):  #loops through every position in the lines in random order
 
-        x_activator, y_activator = set_direction_parameters(
-            fit_direction)
-        if word_fits_in_range(current_word, puzzle_x_position,
-                              x_activator, puzzle_y_position,
-                              y_activator):
+        x_activator, y_activator = set_direction_parameters(fit_direction)
+        if word_fits_in_range(current_word, puzzle_x_position, x_activator,
+                              puzzle_y_position, y_activator):
             for word_position in range(len(current_word)):
                 if not word_matches_position(
-                        puzzle, current_word, word_position,
-                        puzzle_x_position, x_activator,
-                        puzzle_y_position,
+                        puzzle, current_word, word_position, puzzle_x_position,
+                        x_activator, puzzle_y_position,
                         y_activator) and not puzzle_position_is_empty(
                             puzzle, word_position, puzzle_x_position,
-                            x_activator, puzzle_y_position,
-                            y_activator):
+                            x_activator, puzzle_y_position, y_activator):
                     #the word doesnt fit in this position, breaks out of word loop
                     start_x_position = -1
                     start_y_position = -1
@@ -164,23 +164,25 @@ def find_best_fit(puzzle, current_word):
     #The funtion return a random position is no overlap fits can be found
     fit = 0
 
-    for puzzle_y_position, puzzle_x_position, fit_direction in product( sample( range(LINE_COUNT), k=LINE_COUNT), sample(
-            range(COLUMN_COUNT), k=COLUMN_COUNT), sample(list(directions), k = 3)):
+    for puzzle_y_position, puzzle_x_position, fit_direction in product(
+            sample(
+                range(LINE_COUNT), k=LINE_COUNT),
+            sample(
+                range(COLUMN_COUNT), k=COLUMN_COUNT),
+            sample(
+                list(directions), k=3)):
 
-        x_activator, y_activator = set_direction_parameters(
-            fit_direction)
+        x_activator, y_activator = set_direction_parameters(fit_direction)
 
         temp_fit = 0
-        if word_fits_in_range(current_word, puzzle_x_position,
-                              x_activator, puzzle_y_position,
-                              y_activator):
+        if word_fits_in_range(current_word, puzzle_x_position, x_activator,
+                              puzzle_y_position, y_activator):
 
             for word_position in range(len(current_word)):
 
-                if word_matches_position(
-                        puzzle, current_word, word_position,
-                        puzzle_x_position, x_activator,
-                        puzzle_y_position, y_activator):
+                if word_matches_position(puzzle, current_word, word_position,
+                                         puzzle_x_position, x_activator,
+                                         puzzle_y_position, y_activator):
 
                     temp_fit += 1
 
@@ -188,8 +190,7 @@ def find_best_fit(puzzle, current_word):
                     #if the letter doesn match and the puzzle postion
                     if not puzzle_position_is_empty(
                             puzzle, word_position, puzzle_x_position,
-                            x_activator, puzzle_y_position,
-                            y_activator):
+                            x_activator, puzzle_y_position, y_activator):
                         # if the postion is not empty
                         temp_fit = -1  #Immitates a False
                         break  #Breaks out of the for loop (--> Stops checking the current_word)
@@ -206,7 +207,6 @@ def find_best_fit(puzzle, current_word):
                 start_x_position = puzzle_x_position
                 start_y_position = puzzle_y_position
                 word_direction = fit_direction
-
 
     if fit == 0:  # Means that no fit has been found and calls for a random position
         start_x_position, start_y_position, word_direction = find_random_position(
@@ -238,7 +238,6 @@ def create_puzzle(words):
     for word_index in range(len(
             words)):  #loops through every word in the words list
 
-
         start_x_position, start_y_position, word_direction = find_best_fit(
             puzzle, words[word_index])
         if start_x_position == -1:  #means the word cant be fit
@@ -246,9 +245,8 @@ def create_puzzle(words):
                   " could not be fit in the puzzle")
 
         else:  #A fit has beeen found
-            puzzle = write_word(puzzle, words[word_index],
-                                start_x_position, start_y_position,
-                                word_direction)
+            puzzle = write_word(puzzle, words[word_index], start_x_position,
+                                start_y_position, word_direction)
 
     return puzzle
 

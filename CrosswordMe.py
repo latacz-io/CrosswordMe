@@ -42,8 +42,8 @@ def word_input():
     #Gets messed up if a contain something else than ascii
 
     words = [
-        "looooooooooooooooooooooooooooooooong", "EuropythonAAAAAAAAAAAAAAAAAAAA", "Rimini",
-        "Bologna", "looooooooooooooooooooooooooooooooxxong", "Amore", "coala",
+        "Rimini",
+        "Bologna", "Amore", "coala",
         "Beach", "Sea", "Umbrellas", "Hamburg"
     ]
     for word in reversed(words):
@@ -54,7 +54,7 @@ def word_input():
             words.remove(word)
 
 
-    words.sort(key=len, reverse=True)
+    #words.sort(key=len, reverse=True)
 
     return words
 
@@ -238,26 +238,17 @@ def create_puzzle(words):
     for word_index in range(len(
             words)):  #loops through every word in the words list
 
-        if word_index == 0:  #Set the first word
-            start_x_position, start_y_position, word_direction = find_random_position(
-                puzzle, words[word_index])
-            word_direction = directions.HORIZONTAL
-            start_y_position = 3
-            start_x_position = 2
-            puzzle = write_word(puzzle, words[word_index], start_x_position,
-                                start_y_position, word_direction)
 
-        else:  #For every word after the first one
-            start_x_position, start_y_position, word_direction = find_best_fit(
-                puzzle, words[word_index])
-            if start_x_position == -1:  #means the word cant be fit
-                print("The word " + words[word_index] +
-                      " could not be fit in the puzzle")
+        start_x_position, start_y_position, word_direction = find_best_fit(
+            puzzle, words[word_index])
+        if start_x_position == -1:  #means the word cant be fit
+            print("The word " + words[word_index] +
+                  " could not be fit in the puzzle")
 
-            else:  #A fit has beeen found
-                puzzle = write_word(puzzle, words[word_index],
-                                    start_x_position, start_y_position,
-                                    word_direction)
+        else:  #A fit has beeen found
+            puzzle = write_word(puzzle, words[word_index],
+                                start_x_position, start_y_position,
+                                word_direction)
 
     return puzzle
 

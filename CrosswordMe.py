@@ -43,19 +43,13 @@ def word_input():
     #Sorts the words by length descedning. Therefore the longes word is set first
     #Gets messed up if a contain something else than ascii
 
-    words = [
-        "Rimini", "Bologna", "Amore", "coala", "Beach", "Sea", "Umbrellas",
-        "Hamburg"
-    ]
-    for word in reversed(words):
-        if len(word) > LINE_COUNT:
-            print(word + " has " + str(len(
-                word)) + " letters. A maximum length of " + str(LINE_COUNT) +
-                  " Letters is possible. " + word + " has been ommitted")
-            words.remove(word)
+    word_file = open("words.txt", "r")
+    words = []
 
-    #words.sort(key=len, reverse=True)
+    for line in word_file:
+        words.append(word_file.readline())
 
+    word_file.close()
     return words
 
 

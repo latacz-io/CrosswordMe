@@ -39,17 +39,26 @@ def fill_field_with_randoms(puzzle):
 
 
 def word_input():
-    #Collects the words for the puzzle.
+    #Reads the words from "words.txt"
     #Sorts the words by length descedning. Therefore the longes word is set first
     #Gets messed up if a contain something else than ascii
 
-    word_file = open("words.txt", "r")
+
     words = []
 
-    for line in word_file:
-        words.append(word_file.readline())
+    with open("words.txt") as word_file:
+        for line in word_file:
+            print(line)
+            words.append(str(line).rstrip())
 
-    word_file.close()
+    for word in reversed(words):
+         if len(word) > LINE_COUNT:
+             print(word + " has " + str(len(
+                 word)) + " letters. A maximum length of " + str(LINE_COUNT) +
+                   " Letters is possible. " + word + " has been ommitted")
+             words.remove(word)
+
+    words.sort(key=len, reverse=True)
     return words
 
 
